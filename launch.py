@@ -1,1 +1,2 @@
-this is a push try
+def try_print(word):
+    print(word)
