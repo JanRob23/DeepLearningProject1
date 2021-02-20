@@ -1,7 +1,5 @@
 from test_folder import print_stuff
+from fileIO import openMNIST
 
-
-def try_print(word):
-    print(word)
-
-print_stuff('wddf')
+file = 'data/mnist_test.csv'
+openMNIST(file)
