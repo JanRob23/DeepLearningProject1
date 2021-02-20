@@ -1,5 +1,9 @@
 from test_folder import print_stuff
 from fileIO import openMNIST
 
-file = 'data/mnist_test.csv'
-openMNIST(file)
+
+train = 'data/mnist_train.csv'
+test = 'data/mnist_test.csv'
+x_train, y_train = openMNIST(train)
+x_test, y_test = openMNIST(test)
+
