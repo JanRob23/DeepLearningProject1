@@ -9,7 +9,8 @@ from tqdm import tqdm
 import pandas as pd
 
 
-def openMNIST(data):
+def openMNIST(filename):
+    data = pd.read_csv(filename)
     labels = data.iloc[:,0].values
     images = data.iloc[:,1:].values
     return images, labels
