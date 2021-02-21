@@ -5,8 +5,8 @@ import numpy as np
 from functions import train_cnn, eval_cnn
 
 # local path
-#train = '/home/jan/Documents/Deep learning data/mnist_train.csv'
-#test = '/home/jan/Documents/Deep learning data/mnist_test.csv'
+train = '/home/jan/Documents/Deep learning data/mnist_train.csv'
+test = '/home/jan/Documents/Deep learning data/mnist_test.csv'
 
 # colab path
 # train = '/content/mnist_train.csv'
