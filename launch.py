@@ -5,12 +5,12 @@ import numpy as np
 from functions import train_cnn, eval_cnn
 
 # local path
-train = '/data/mnist_train.csv'
-test = '/data/mnist_test.csv'
+# train = '/data/mnist_train.csv'
+# test = '/data/mnist_test.csv'
 
 # colab path
-# train = '/content/mnist_train.csv'
-# test = '/content/mnist_test.csv'
+train = '/content/drive/MyDrive/data/mnist_train.csv'
+test = '/content/drive/MyDrive/data/mnist_test.csv'
 
 
 def go(train, test):
