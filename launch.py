@@ -2,11 +2,16 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
-from functions import train_cnn
+from functions import train_cnn, eval_cnn
 
+# local path
+# train = '/home/jan/Documents/Deep learning data/mnist_train.csv'
+# test = '/home/jan/Documents/Deep learning data/mnist_test.csv'
 
-train = '/home/jan/Documents/Deep learning data/mnist_train.csv'
-test = '/home/jan/Documents/Deep learning data/mnist_test.csv'
+# colab path
+train = '/content/mnist_train.csv'
+test = '/content/mnist_test.csv'
+
 
 x_train, y_train = openMNIST(train)
 x_test, y_test = openMNIST(test)
@@ -20,4 +25,6 @@ x_test = np.flip(x_test[:], 1)
 # print(y_test[600])
 # fig = pcolor(x_test[600], cmap='gist_gray')
 # plt.show()
-train_cnn(x_train, y_train, 'lenet')
+model, _ = train_cnn(x_train, y_train)
+acc = eval_cnn(model,x_test, y_test)
+print(acc)

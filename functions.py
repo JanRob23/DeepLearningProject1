@@ -8,12 +8,16 @@ from cnn_functions import LeNet5
 
 
 
-def train_cnn(x, y, net, epochs=20, learningRate=0.007, l2_weight_decay=0.001, batch_size=20):
+def train_cnn(x, y, epochs=20, learningRate=0.007, l2_weight_decay=0.001, batch_size=200):
     #if net == 'LeNet5':
     model = LeNet5()
-    x = torch.from_numpy(x)
-    y = torch.from_numpy(y)
+    model = model.float()
+    x = torch.from_numpy(x.copy())
+    y = torch.from_numpy(y.copy())
+    x = x.float()
+    y = y.long()
     if torch.cuda.is_available():
+        print('yay there is a gpu')
         model = model.cuda()
         x = x.cuda()
         y = y.cuda()
@@ -24,7 +28,7 @@ def train_cnn(x, y, net, epochs=20, learningRate=0.007, l2_weight_decay=0.001, b
     if not batch_size or batch_size > x.shape[0]:
         batch_size = x.shape[0]
     batch_num = x.shape[0] / batch_size
-    x = x.reshape(-1, batch_size, 1, 16, 15)
+    x = x.reshape(-1, batch_size, 1, 28, 28)
     y = y.reshape(-1, batch_size)
 
     for epoch in range(0, epochs):
@@ -34,7 +38,6 @@ def train_cnn(x, y, net, epochs=20, learningRate=0.007, l2_weight_decay=0.001, b
             # Here we feed in training data and perform backprop according to the loss
             # Run the forward pass
             outputs = model.forward(x[i])
-            y = y.long()
             loss = criterion(outputs, y[i])
             loss_list.append(loss.item())
 
@@ -43,3 +46,17 @@ def train_cnn(x, y, net, epochs=20, learningRate=0.007, l2_weight_decay=0.001, b
             loss.backward()
             optimizer.step()
     return model, loss_list
+
+def eval_cnn(model, x, y):
+    x = torch.from_numpy(x.copy())
+    y = torch.from_numpy(y.copy())
+    x = x.float()
+    y = y.long()
+    output = model.forward(x)
+    total = y.size(0)
+    _, predicted = torch.max(output.data, 1)
+    correct = 0
+    for i in range(total):
+        if predicted[i] == y[i]:
+            correct += 1
+    return correct / total
