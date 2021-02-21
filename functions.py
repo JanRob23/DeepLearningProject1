@@ -53,6 +53,8 @@ def eval_cnn(model, x, y):
     x = x.reshape(-1, 1, 28, 28)
     x = torch.from_numpy(x.copy())
     y = torch.from_numpy(y.copy())
+    x = x.cuda()
+    y = y.cuda()
     x = x.float()
     y = y.long()
     output = model.forward(x)
