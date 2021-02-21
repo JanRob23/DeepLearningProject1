@@ -45,9 +45,12 @@ def train_cnn(x, y, epochs=20, learningRate=0.007, l2_weight_decay=0.001, batch_
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+    print('I did my training')
     return model, loss_list
 
 def eval_cnn(model, x, y):
+    print('now Im evaluating')
+    x = x.reshape(-1, 1, 28, 28)
     x = torch.from_numpy(x.copy())
     y = torch.from_numpy(y.copy())
     x = x.float()
