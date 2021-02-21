@@ -15,6 +15,8 @@ test = pd.read_csv(test)
 # test = '/content/mnist_test.csv'
 
 def launch(train, test):
+    print('i am running')
+    print('---')
     x_train, y_train = openMNIST(train)
     x_test, y_test = openMNIST(test)
 
