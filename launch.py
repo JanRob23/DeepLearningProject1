@@ -2,12 +2,14 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
+import pandas as pd
 from functions import train_cnn, eval_cnn
 
 # local path
 train = '/home/jan/Documents/Deep learning data/mnist_train.csv'
 test = '/home/jan/Documents/Deep learning data/mnist_test.csv'
-
+train = pd.read_csv(train)
+test = pd.read_csv(test)
 # colab path
 # train = '/content/mnist_train.csv'
 # test = '/content/mnist_test.csv'
