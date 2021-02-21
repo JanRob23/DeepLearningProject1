@@ -12,7 +12,7 @@ from functions import train_cnn, eval_cnn
 # train = '/content/mnist_train.csv'
 # test = '/content/mnist_test.csv'
 
-def launch(train, test):
+def launch_cnn(train, test):
     x_train, y_train = openMNIST(train)
     x_test, y_test = openMNIST(test)
 
