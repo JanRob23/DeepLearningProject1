@@ -7,10 +7,10 @@ import pandas as pd
 from functions import train_cnn, eval_cnn
 from cnn_functions import LeNet5
 from cnn_functions import CustomNet
-
-# local path
-train = pd.read_csv('data/mnist_train.csv')
-test = pd.read_csv('data/mnist_test.csv')
+if __name__ == "__main__":
+    # local path
+    train = 'data/mnist_train.csv')
+    test = 'data/mnist_test.csv')
 
 # colab path
 # train = '/content/drive/MyDrive/data/mnist_train.csv'
