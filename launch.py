@@ -9,8 +9,8 @@ from cnn_functions import LeNet5
 from cnn_functions import CustomNet
 
 # local path
-train = pd.csv_read('data/mnist_train.csv')
-test = pd.csv_read('data/mnist_test.csv')
+train = pd.read_csv('data/mnist_train.csv')
+test = pd.read_csv('data/mnist_test.csv')
 
 # colab path
 # train = '/content/drive/MyDrive/data/mnist_train.csv'
