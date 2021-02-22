@@ -7,6 +7,7 @@ import pandas as pd
 from functions import train_cnn, eval_cnn
 from cnn_functions import LeNet5
 from cnn_functions import CustomNet
+from cnn_functions import linear_comb
 
 
 def go(train, test):
@@ -24,15 +25,20 @@ def go(train, test):
     # print(y_test[600])
     # fig = pcolor(x_test[600], cmap='gist_gray')
     # plt.show()
-    print('LeNet5')
-    lenet = LeNet5()
-    model, _ = train_cnn(lenet,x_train, y_train)
-    acc = eval_cnn(model,x_test, y_test)
-    print(acc)
-    print('CustomNet') 
-    custom = CustomNet()
-    model, _ = train_cnn(custom, x_train, y_train)
-    acc = eval_cnn(model,x_test, y_test)
+    # print('LeNet5')
+    # lenet = LeNet5()
+    # model, _ = train_cnn(lenet,x_train, y_train)
+    # acc = eval_cnn(model,x_test, y_test)
+    # print(acc)
+    # print('CustomNet')
+    # custom = CustomNet()
+    # model, _ = train_cnn(custom, x_train, y_train)
+    # acc = eval_cnn(model,x_test, y_test)
+    # print(acc)
+    print('linear ensample')
+    linear_co = linear_comb()
+    model, _ = train_cnn(linear_co, x_train, y_train)
+    acc = eval_cnn(linear_co, x_test, y_test)
     print(acc)
 
 
