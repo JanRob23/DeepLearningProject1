@@ -8,9 +8,8 @@ from cnn_functions import LeNet5
 
 
 
-def train_cnn(x, y, epochs=20, learningRate=0.007, l2_weight_decay=0.001, batch_size=200):
+def train_cnn(model, x, y, epochs=20, learningRate=0.007, l2_weight_decay=0.001, batch_size=200):
     #if net == 'LeNet5':
-    model = LeNet5()
     model = model.float()
     x = torch.from_numpy(x.copy())
     y = torch.from_numpy(y.copy())

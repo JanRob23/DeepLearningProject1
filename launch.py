@@ -1,16 +1,19 @@
+from cnn_functions import LeNet5
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
 from functions import train_cnn, eval_cnn
+from cnn_functions import LeNet5
+from cnn_functions import CustomNet
 
 # local path
-# train = '/data/mnist_train.csv'
-# test = '/data/mnist_test.csv'
+train = 'data/mnist_train.csv'
+test = 'data/mnist_test.csv'
 
 # colab path
-train = '/content/drive/MyDrive/data/mnist_train.csv'
-test = '/content/drive/MyDrive/data/mnist_test.csv'
+# train = '/content/drive/MyDrive/data/mnist_train.csv'
+# test = '/content/drive/MyDrive/data/mnist_test.csv'
 
 
 def go(train, test):
@@ -28,7 +31,14 @@ def go(train, test):
     # print(y_test[600])
     # fig = pcolor(x_test[600], cmap='gist_gray')
     # plt.show()
-    model, _ = train_cnn(x_train, y_train)
+    print('LeNet5')
+    lenet = LeNet5()
+    model, _ = train_cnn(lenet,x_train, y_train)
+    acc = eval_cnn(model,x_test, y_test)
+    print(acc)
+    print('CustomNet') 
+    custom = CustomNet()
+    model, _ = train_cnn(custom, x_train, y_train)
     acc = eval_cnn(model,x_test, y_test)
     print(acc)
 
