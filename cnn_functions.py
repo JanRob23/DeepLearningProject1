@@ -144,60 +144,76 @@ class linear_comb(nn.Module):
     def linear_two(self):
         layers = nn.Sequential(
             nn.Linear(28*28, 250),
-            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(250, 10)
         )
         return layers
     def linear_three(self):
         layers = nn.Sequential(
             nn.Linear(28 * 28, 400),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(400, 150),
-            nn.ReLU(inplace=True),
+            nn.Tanh(),
+            #nn.ReLU(inplace=True),
             nn.Linear(150, 10)
         )
         return layers
     def linear_four(self):
         layers = nn.Sequential(
             nn.Linear(28 * 28, 500),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(500, 300),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(300, 150),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(150, 10)
         )
         return layers
     def linear_six(self):
         layers = nn.Sequential(
             nn.Linear(28 * 28, 600),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(600, 350),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(350, 200),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(200, 100),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(100, 60),
+            nn.Tanh(),
             nn.Linear(60, 10)
         )
         return layers
     def linear_eight(self):
         layers = nn.Sequential(
             nn.Linear(28 * 28, 600),
-            nn.ReLU(inplace=True),
+          #  nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(600, 400),
-            nn.ReLU(inplace=True),
+           # nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(400, 300),
-            nn.ReLU(inplace=True),
+           # nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(300, 400),
-            nn.ReLU(inplace=True),
+           # nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(400, 150),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
             nn.Linear(150, 100),
-            nn.ReLU(inplace=True),
+            #nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(100, 50),
-            nn.ReLU(inplace=True),
+           # nn.ReLU(inplace=True),
+            nn.Tanh(),
             nn.Linear(50, 10)
         )
         return layers
