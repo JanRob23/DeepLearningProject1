@@ -122,7 +122,7 @@ class CustomNet(torch.nn.Module):
 
 class linear_comb(nn.Module):
     def __init__(self):
-        super(linear_emsamble, self).__init__()
+        super(linear_comb, self).__init__()
         self.linear_two1 = self.linear_two()
         self.linear_three1 = self.linear_three()
         self.linear_four1 = self.linear_four()
