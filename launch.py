@@ -7,14 +7,6 @@ import pandas as pd
 from functions import train_cnn, eval_cnn
 from cnn_functions import LeNet5
 from cnn_functions import CustomNet
-if __name__ == "__main__":
-    # local path
-    train = 'data/mnist_train.csv'
-    test = 'data/mnist_test.csv'
-
-# colab path
-# train = '/content/drive/MyDrive/data/mnist_train.csv'
-# test = '/content/drive/MyDrive/data/mnist_test.csv'
 
 
 def go(train, test):
@@ -44,4 +36,8 @@ def go(train, test):
     print(acc)
 
 
-go(train,test)
+if __name__ == "__main__":
+    # local path
+    train = 'data/mnist_train.csv'
+    test = 'data/mnist_test.csv'
+    go(train,test)
