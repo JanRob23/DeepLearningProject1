@@ -3,13 +3,14 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
+import pandas as pd
 from functions import train_cnn, eval_cnn
 from cnn_functions import LeNet5
 from cnn_functions import CustomNet
 
 # local path
-train = 'data/mnist_train.csv'
-test = 'data/mnist_test.csv'
+train = pd.csv_read('data/mnist_train.csv')
+test = pd.csv_read('data/mnist_test.csv')
 
 # colab path
 # train = '/content/drive/MyDrive/data/mnist_train.csv'
