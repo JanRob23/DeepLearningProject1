@@ -9,8 +9,8 @@ from cnn_functions import LeNet5
 from cnn_functions import CustomNet
 if __name__ == "__main__":
     # local path
-    train = 'data/mnist_train.csv')
-    test = 'data/mnist_test.csv')
+    train = 'data/mnist_train.csv'
+    test = 'data/mnist_test.csv'
 
 # colab path
 # train = '/content/drive/MyDrive/data/mnist_train.csv'
