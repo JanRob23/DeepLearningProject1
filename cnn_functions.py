@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional
-
+import numpy as np
 
 class AlexNet(nn.Module):
 
@@ -131,19 +131,21 @@ class linear_comb(nn.Module):
         self.readout_layer = nn.Linear(5*10, 10)
 
     def forward(self, x):
+        x = x.view(-1, 28*28)
         out1 = self.linear_two1(x)
         out2 = self.linear_three1(x)
         out3 = self.linear_four1(x)
         out4 = self.linear_six1(x)
         out5 = self.linear_eight1(x)
-        out_all = torch.cat((out1, out2, out3, out4, out5), 0)
+        out_all = torch.cat((out1, out2, out3, out4, out5), 1)
+       # print(out_all.shape)
         x = self.readout_layer(out_all)
         return x
     def linear_two(self):
         layers = nn.Sequential(
             nn.Linear(28*28, 250),
             #nn.ReLU(inplace=True),
-            nn.Linear(300, 10)
+            nn.Linear(250, 10)
         )
         return layers
     def linear_three(self):
