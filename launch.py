@@ -32,7 +32,7 @@ def go(train, test):
     # print(acc)
     print('CustomNet')
     custom = CustomNet()
-    train_acc, test_acc, m_list, change = crossvalidationCNN(custom, x_train, y_train, 10)
+    train_acc, test_acc, m_list, change = crossvalidationCNN(custom, x_train, y_train, 5)
     plotTrainTestPerformance(train_acc, test_acc, change, m_list)
     # model, _, _ , _= train_cnn(custom, x_train, y_train, x_test, y_test, batch_size=200)
     # acc = eval_cnn(model,x_test, y_test)
