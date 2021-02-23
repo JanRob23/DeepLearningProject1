@@ -42,7 +42,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80
             outputs = model.forward(x[i])
             print('ddddddddeeeee')
             loss = criterion(outputs, y[i])
-            print('1')
+            print('wprks')
             loss_list.append(loss.item())
             print('2')
 

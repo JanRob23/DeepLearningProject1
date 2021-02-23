@@ -83,7 +83,7 @@ class CustomNet(torch.nn.Module):
     def forward(self, x):
         x = self.layers_conv(x)
         print(x.shape[1], x.shape[2], x.shape[3])
-        x = x.view(-1, 16 * 5 * 5)
+        x = x.view(-1, 16 * 8 * 8)
         x = self.layers_linear(x)
         return x
 
@@ -106,7 +106,7 @@ class CustomNet(torch.nn.Module):
 
     def CustomNetLayersLinear(self):
         layers = nn.Sequential(
-            nn.Linear(16 * 5 * 5, 120),
+            nn.Linear(16 * 8 * 8, 120),
             nn.Linear(120, 84),
             nn.Linear(84, 10)
         )
