@@ -39,6 +39,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80
             # Run the forward pass
             outputs = model.forward(x[i])
             loss = criterion(outputs, y[i])
+            print('wprks')
             loss_list.append(loss.item())
 
             # Backprop and perform Adam optimisation
