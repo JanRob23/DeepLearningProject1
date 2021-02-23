@@ -7,7 +7,7 @@ import time
 from networks import LeNet5
 from tqdm import tqdm
 import numpy as np
-from sklearn.cross_validation import KFold
+from sklearn.model_selection import KFold
 
 
 
