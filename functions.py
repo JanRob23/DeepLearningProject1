@@ -54,7 +54,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
             test_acc.append(eval_cnn(model, x_test, y_test))
     #print('I did my training')
     end = time.time()
-    print('training took: ', (end-start))
+    #print('training took: ', (end-start))
     return model, train_acc, test_acc
 
 def eval_cnn(model, x, y):
