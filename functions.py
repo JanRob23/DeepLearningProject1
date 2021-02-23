@@ -4,11 +4,11 @@ import torch.nn as nn
 from torch.functional import F
 from torch.optim import Adam, SGD
 import time
-from cnn_functions import LeNet5
+from networks import LeNet5
 
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.01, l2_weight_decay=0, batch_size=200):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80, learningRate=0.01, l2_weight_decay=0, batch_size=200):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -45,6 +45,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+        # here the training and testing acc is tracked if indicated to the function
         if track_train_test_acc:
             train_acc.append(eval_cnn(model, x, y))
             test_acc.append(eval_cnn(model, x_test, y_test))
@@ -56,10 +57,9 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40
     return model, loss_list
 
 def eval_cnn(model, x, y):
-    print('now Im evaluating')
     x = x.reshape(-1, 1, 28, 28)
+    # this makes sure that eval_cnn can be called with both training and testing data and the diff types, shapes
     if not torch.is_tensor(x):
-        print('works')
         x = torch.from_numpy(x.copy())
         y = torch.from_numpy(y.copy())
     else:

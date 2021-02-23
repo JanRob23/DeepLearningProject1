@@ -9,6 +9,6 @@ def plotTrainTestPerformance(train, test, change):
     axes = plt.gca()
     #axes.set_ylim([0,0.05 ])
     plt.xlabel(change)
-    plt.ylabel('Accuracy')
+    plt.ylabel('Error')
     plt.legend(['Training', 'Testing'], loc=1)
     plt.show()
