@@ -52,9 +52,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80
     print('I did my training')
     end = time.time()
     print('training took: ', (end-start))
-    if track_train_test_acc:
-        return model, train_acc, test_acc
-    return model, loss_list
+    return model, train_acc, test_acc, loss_list
 
 def eval_cnn(model, x, y):
     x = x.reshape(-1, 1, 28, 28)
