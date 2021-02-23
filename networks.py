@@ -136,76 +136,78 @@ class linear_comb(nn.Module):
     def linear_two(self):
         layers = nn.Sequential(
             nn.Linear(28*28, 500),
-            nn.Tanh(),
+            #nn.Tanh(),
+            nn.ReLU(inplace=True),
             nn.Linear(500, 10)
         )
         return layers
     def linear_three(self):
         layers = nn.Sequential(
             nn.Linear(28 * 28, 800),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(800, 300),
-            nn.Tanh(),
-            #nn.ReLU(inplace=True),
+            #nn.Tanh(),
+            nn.ReLU(inplace=True),
             nn.Linear(300, 10)
         )
         return layers
+
     def linear_four(self):
         layers = nn.Sequential(
             nn.Linear(28 * 28, 1000),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(1000, 500),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(500, 300),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(300, 10)
         )
         return layers
     def linear_six(self):
         layers = nn.Sequential(
             nn.Linear(28 * 28, 1200),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(1200, 700),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(700, 400),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(400, 200),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(200, 100),
-            nn.Tanh(),
+            #nn.Tanh(),
             nn.Linear(100, 10)
         )
         return layers
     def linear_eight(self):
         layers = nn.Sequential(
             nn.Linear(28 * 28, 1200),
-          #  nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(1200, 800),
-           # nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(800, 600),
-           # nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(600, 500),
-           # nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(500, 300),
-            #nn.ReLU(inplace=True),
+            nn.ReLU(inplace=True),
             nn.Linear(300, 200),
-            #nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(200, 100),
-           # nn.ReLU(inplace=True),
-            nn.Tanh(),
+            nn.ReLU(inplace=True),
+            #nn.Tanh(),
             nn.Linear(100, 10)
         )
         return layers
