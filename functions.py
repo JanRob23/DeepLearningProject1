@@ -19,7 +19,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
     x = x.float()
     y = y.long()
     if torch.cuda.is_available():
-        print('yay there is a gpu')
+        #print('yay there is a gpu')
         model = model.cuda()
         x = x.cuda()
         y = y.cuda()
@@ -30,7 +30,6 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
     if not batch_size or batch_size > x.shape[0]:
         batch_size = x.shape[0]
     batch_num = x.shape[0] / batch_size
-    print(batch_num)
     x = x.reshape(-1, batch_size, 1, 28, 28)
     y = y.reshape(-1, batch_size)
     test_acc = []
@@ -53,9 +52,9 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
         if track_train_test_acc:
             train_acc.append(eval_cnn(model, x, y))
             test_acc.append(eval_cnn(model, x_test, y_test))
-    print('I did my training')
+    #print('I did my training')
     end = time.time()
-    print('training took: ', (end-start))
+    #print('training took: ', (end-start))
     return model #, train_acc, test_acc, loss_list
 
 def eval_cnn(model, x, y):
