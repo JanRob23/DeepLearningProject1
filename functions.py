@@ -119,7 +119,7 @@ def crossvalidationCNN(model_used, x, y, k):
         kf = KFold(n_splits=k)
         for train, test in tqdm(kf.split(x), desc='folds', position=1, leave=False):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
-            model = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 200)
+            model = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 1000, epochs=20)
             acc = eval_cnn(model, train_x, train_y)
             acc_train.append(acc)
             acc = eval_cnn(model, test_x, test_y)
