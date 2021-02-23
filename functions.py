@@ -97,9 +97,9 @@ def crossvalidationCNN(model_used, x, y, k):
     # also declare what you change for the graph legend
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'l2 regularization'
-    start = 0
-    stop = 0.01
-    step = 0.001
+    start = 0.005
+    stop = 0.008
+    step = 0.0001
 
     # new folder for each new run, except if ran size is 1
     # file with list of ave accuracies
@@ -118,7 +118,8 @@ def crossvalidationCNN(model_used, x, y, k):
         kf = KFold(n_splits=k)
         for train, test in kf.split(x):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
-            model , train_acc, test_acc = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 64, epochs=10)
+            model , train_acc, test_acc = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 64, epochs=50)
+            print(model)
             acc = eval_cnn(model, train_x, train_y)
             acc_train.append(acc)
             acc = eval_cnn(model, test_x, test_y)
@@ -132,6 +133,6 @@ def crossvalidationCNN(model_used, x, y, k):
             best_m_train = mean_train_acc
             best_m = m
         m_list.append(round(m, 4))
-    print(f'Best m: {best_m}\ntrain acc: {mean_train_acc}\ntest acc:{mean_test_acc}')
+    print(f'\nBest m: {best_m}\ntrain acc: {best_m_train}\ntest acc:{best_m_acc}')
     return acc_train_m, acc_test_m, m_list, change
 
