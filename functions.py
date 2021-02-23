@@ -3,13 +3,13 @@ from torch.autograd import Variable
 import torch.nn as nn
 from torch.functional import F
 from torch.optim import Adam, SGD
-
+import time
 from cnn_functions import LeNet5
 
 
 
-def train_cnn(model, x, y, epochs=20, learningRate=0.007, l2_weight_decay=0.001, batch_size=200):
-    #if net == 'LeNet5':
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.01, l2_weight_decay=0, batch_size=200):
+    start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
     y = torch.from_numpy(y.copy())
@@ -29,7 +29,8 @@ def train_cnn(model, x, y, epochs=20, learningRate=0.007, l2_weight_decay=0.001,
     batch_num = x.shape[0] / batch_size
     x = x.reshape(-1, batch_size, 1, 28, 28)
     y = y.reshape(-1, batch_size)
-
+    test_acc = []
+    train_acc = []
     for epoch in range(0, epochs):
         # loop over the number of batches feeds in batch_size many images and performs backprob
         # then again and so on
@@ -44,22 +45,35 @@ def train_cnn(model, x, y, epochs=20, learningRate=0.007, l2_weight_decay=0.001,
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+        if track_train_test_acc:
+            train_acc.append(eval_cnn(model, x, y))
+            test_acc.append(eval_cnn(model, x_test, y_test))
     print('I did my training')
+    end = time.time()
+    print('training took: ', (end-start))
+    if track_train_test_acc:
+        return model, train_acc, test_acc
     return model, loss_list
 
 def eval_cnn(model, x, y):
     print('now Im evaluating')
     x = x.reshape(-1, 1, 28, 28)
-    x = torch.from_numpy(x.copy())
-    y = torch.from_numpy(y.copy())
-    x = x.cuda()
-    y = y.cuda()
+    if not torch.is_tensor(x):
+        print('works')
+        x = torch.from_numpy(x.copy())
+        y = torch.from_numpy(y.copy())
+    else:
+        y = y.reshape(-1)
+    if torch.cuda.is_available():
+        x = x.cuda()
+        y = y.cuda()
     x = x.float()
     y = y.long()
     output = model.forward(x)
     total = y.size(0)
     _, predicted = torch.max(output.data, 1)
     correct = 0
+
     for i in range(total):
         if predicted[i] == y[i]:
             correct += 1

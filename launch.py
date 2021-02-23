@@ -8,7 +8,7 @@ from functions import train_cnn, eval_cnn
 from cnn_functions import LeNet5
 from cnn_functions import CustomNet
 from cnn_functions import linear_comb
-
+from plots_and_stuff import plotTrainTestPerformance
 
 def go(train, test):
     print('i am running')
@@ -37,9 +37,10 @@ def go(train, test):
     # print(acc)
     print('linear ensample')
     linear_co = linear_comb()
-    model, _ = train_cnn(linear_co, x_train, y_train)
-    acc = eval_cnn(linear_co, x_test, y_test)
-    print(acc)
+    model, train_acc, test_acc = train_cnn(linear_co, x_train, y_train, x_test, y_test, track_train_test_acc=True)
+    acc = eval_cnn(model, x_test, y_test)
+    print('accuracy on testing:', acc)
+    plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
 
 
 if __name__ == "__main__":
