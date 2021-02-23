@@ -122,7 +122,7 @@ def crossvalidationCNN(model_used, x, y, k):
             model, loss = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 200)
             acc, _, _, _ = eval_cnn(model, train_x, train_y)
             acc_train.append(acc)
-            acc, _, _, _ = eval_cnn(model, test_x, test_y)
+            acc = eval_cnn(model, test_x, test_y)
             acc_test.append(acc)
         mean_train_acc = round(np.mean(acc_train), 4)
         mean_test_acc = round(np.mean(acc_test), 4)
