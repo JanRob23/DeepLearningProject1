@@ -98,8 +98,8 @@ def crossvalidationCNN(model_used, x, y, k):
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'l2 regularization'
     start = 0
-    stop = 0.1
-    step = 0.01
+    stop = 0.01
+    step = 0.001
 
     # new folder for each new run, except if ran size is 1
     # file with list of ave accuracies
@@ -116,7 +116,7 @@ def crossvalidationCNN(model_used, x, y, k):
         acc_train = list()
         acc_test = list()
         kf = KFold(n_splits=k)
-        for train, test in tqdm(kf.split(x), desc='folds', position=1, leave=False):
+        for train, test in kf.split(x):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
             model = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 1000, epochs=20)
             acc = eval_cnn(model, train_x, train_y)
