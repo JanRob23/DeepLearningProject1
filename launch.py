@@ -43,7 +43,7 @@ def go(train, test):
     model, train_acc, test_acc = train_cnn(linear_co, x_train, y_train, x_test, y_test, track_train_test_acc=False)
     acc = eval_cnn(model, x_test, y_test)
     print('accuracy on testing:', acc)
-    # # comment when you dont want plots for epoch
+    # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
 
 
