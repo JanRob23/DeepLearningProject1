@@ -19,7 +19,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
     x = x.float()
     y = y.long()
     if torch.cuda.is_available():
-        print('yay there is a gpu')
+        #print('yay there is a gpu')
         model = model.cuda()
         x = x.cuda()
         y = y.cuda()
@@ -52,9 +52,9 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
         if track_train_test_acc:
             train_acc.append(eval_cnn(model, x, y))
             test_acc.append(eval_cnn(model, x_test, y_test))
-    print('I did my training')
+    #print('I did my training')
     end = time.time()
-    print('training took: ', (end-start))
+    #print('training took: ', (end-start))
     return model #, train_acc, test_acc, loss_list
 
 def eval_cnn(model, x, y):
@@ -98,7 +98,7 @@ def crossvalidationCNN(model_used, x, y, k):
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'l2 regularization'
     start = 0
-    stop = 1
+    stop = 0.1
     step = 0.01
 
     # new folder for each new run, except if ran size is 1
@@ -118,16 +118,11 @@ def crossvalidationCNN(model_used, x, y, k):
         kf = KFold(n_splits=k)
         for train, test in tqdm(kf.split(x), desc='folds', position=1, leave=False):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
-            model= train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 200)
-            print('hello')
+            model = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 1000, epochs=20)
             acc = eval_cnn(model, train_x, train_y)
-            print('1')
             acc_train.append(acc)
-            print('2')
             acc = eval_cnn(model, test_x, test_y)
-            print('3')
             acc_test.append(acc)
-            print('4')
         mean_train_acc = round(np.mean(acc_train), 4)
         mean_test_acc = round(np.mean(acc_test), 4)
         acc_train_m.append(mean_train_acc)
