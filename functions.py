@@ -11,7 +11,7 @@ from sklearn.model_selection import KFold
 
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.01, l2_weight_decay=0, batch_size=None):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.01, l2_weight_decay=0, batch_size=200):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -30,7 +30,6 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
     if not batch_size or batch_size > x.shape[0]:
         batch_size = x.shape[0]
     batch_num = x.shape[0] / batch_size
-    print(batch_num)
     x = x.reshape(-1, batch_size, 1, 28, 28)
     y = y.reshape(-1, batch_size)
     test_acc = []
