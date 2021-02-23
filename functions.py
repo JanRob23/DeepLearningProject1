@@ -56,7 +56,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
     print('I did my training')
     end = time.time()
     print('training took: ', (end-start))
-    return model, train_acc, test_acc, loss_list
+    return model #, train_acc, test_acc, loss_list
 
 def eval_cnn(model, x, y):
     x = x.reshape(-1, 1, 28, 28)
@@ -119,7 +119,7 @@ def crossvalidationCNN(model_used, x, y, k):
         kf = KFold(len(y), k, indices=False)
         for train, test in tqdm(kf, desc='folds', position=1, leave=False):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
-            model, _, _ , _= train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 200)
+            model= train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 200)
             print('hello')
             acc, _, _, _ = eval_cnn(model, train_x, train_y)
             print('1')
