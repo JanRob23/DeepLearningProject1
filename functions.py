@@ -99,7 +99,7 @@ def crossvalidationCNN(model_used, x, y, k):
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'l2 regularization'
     start = 0
-    stop = 1
+    stop = 0.1
     step = 0.01
 
     # new folder for each new run, except if ran size is 1
