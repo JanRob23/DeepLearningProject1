@@ -11,7 +11,7 @@ from sklearn.model_selection import KFold
 
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.01, l2_weight_decay=0, batch_size=None):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.01, l2_weight_decay=0.001, batch_size=200):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -54,8 +54,8 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
             test_acc.append(eval_cnn(model, x_test, y_test))
     #print('I did my training')
     end = time.time()
-    #print('training took: ', (end-start))
-    return model #, train_acc, test_acc, loss_list
+    print('training took: ', (end-start))
+    return model, train_acc, test_acc
 
 def eval_cnn(model, x, y):
     x = x.reshape(-1, 1, 28, 28)
