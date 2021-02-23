@@ -7,10 +7,11 @@ import time
 from networks import LeNet5
 from tqdm import tqdm
 import numpy as np
+from sklearn.cross_validation import KFold
 
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80, learningRate=0.01, l2_weight_decay=0, batch_size=None):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.01, l2_weight_decay=0, batch_size=None):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -84,7 +85,6 @@ def eval_cnn(model, x, y):
 def crossvalidationCNN(model_used, x, y, k):
     # setup the k-fold split
     total = x.shape[0]
-    k = split_check(total, k)
     bin_size = int(total / k)
     folds_x = np.array(np.array_split(x, k))
     folds_y = np.array(np.split(y, k))
@@ -116,9 +116,9 @@ def crossvalidationCNN(model_used, x, y, k):
         # os.makedirs(mFile, exist_ok= True)
         acc_train = list()
         acc_test = list()
-        for fold in tqdm(range(0, k), desc='folds', position=1,
-                         leave=False):  # train a new model for each fold and for each m
-            train_x, train_y, test_x, test_y = get_fold(folds_x, folds_y, fold)
+        kf = KFold(len(y), 2, indices=False)
+        for train, test in tqdm(kf, desc='folds', position=1, leave=False):
+            train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
             model, loss = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 200)
             acc, _, _, _ = eval_cnn(model, train_x, train_y)
             acc_train.append(acc)
@@ -136,33 +136,3 @@ def crossvalidationCNN(model_used, x, y, k):
     print(f'Best m: {best_m}\ntrain acc: {mean_train_acc}\ntest acc:{mean_test_acc}')
     return acc_train_m, acc_test_m, m_list, change
 
-# returns the folds in separate training and testing data
-# the choice of which fold is used for testing data is indicated by the index n
-def get_fold(folds_x, folds_y, n):
-    test_x = folds_x[n]
-    test_y = folds_y[n]
-    temp = np.repeat(True, folds_x.shape[0])
-    temp[n] = False
-    train_x = folds_x[temp]
-    train_y = folds_y[temp]
-    train_x = np.concatenate(train_x, axis=0)
-    train_y = np.concatenate(train_y, axis=0)
-    return train_x, train_y, test_x, test_y
-
-
-# helper function to make sure data can be split up into k folds without causing shape issues,
-# if there is an issue, the closest number to k that will not cause problems will be chosen
-# with a preference to the higher number.
-def split_check(n, k):
-    if n % k == 0:
-        return k
-    u = 1
-    while n % (k + u) != 0 and (k - u < 2 or n % (k - u) != 0):
-        u += 1
-    if n % (k + u) == 0:
-        nk = k + u
-    elif n % (k - u) == 0:
-        nk = k - u
-    print(f'Warning: current K={k} for K-fold cross-validation would not divide folds correctly')
-    print(f'the new k: {nk} was chosen instead')
-    return nk
