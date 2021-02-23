@@ -30,19 +30,21 @@ def go(train, test):
     # model, _ = train_cnn(lenet,x_train, y_train)
     # acc = eval_cnn(model,x_test, y_test)
     # print(acc)
-    # print('CustomNet')
-    # custom = CustomNet()
-    # model, _ = train_cnn(custom, x_train, y_train)
-    # acc = eval_cnn(model,x_test, y_test)
-    # print(acc)
-    print('linear ensample')
-    linear_co = linear_comb()
-    # have to adjust this you dont wanna track performance over epochs, just set it to False
-    model, train_acc, test_acc = train_cnn(linear_co, x_train, y_train, x_test, y_test, track_train_test_acc=True)
-    acc = eval_cnn(model, x_test, y_test)
-    print('accuracy on testing:', acc)
-    # comment when you dont want plots for epoch
-    plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
+    print('CustomNet')
+    custom = CustomNet()
+    print('helo')
+    model, _, _ , _= train_cnn(custom, x_train, y_train, x_test, y_test, batch_size=200)
+    print('ddd')
+    acc = eval_cnn(model,x_test, y_test)
+    print(acc)
+    # print('linear ensample')
+    # linear_co = linear_comb()
+    # # have to adjust this you dont wanna track performance over epochs, just set it to False
+    # model, train_acc, test_acc = train_cnn(linear_co, x_train, y_train, x_test, y_test, track_train_test_acc=True)
+    # acc = eval_cnn(model, x_test, y_test)
+    # print('accuracy on testing:', acc)
+    # # comment when you dont want plots for epoch
+    # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
 
 
 if __name__ == "__main__":

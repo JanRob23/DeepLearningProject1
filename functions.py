@@ -8,7 +8,7 @@ from networks import LeNet5
 
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80, learningRate=0.01, l2_weight_decay=0, batch_size=200):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80, learningRate=0.01, l2_weight_decay=0, batch_size=None):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -27,8 +27,10 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80
     if not batch_size or batch_size > x.shape[0]:
         batch_size = x.shape[0]
     batch_num = x.shape[0] / batch_size
+    print(batch_num)
     x = x.reshape(-1, batch_size, 1, 28, 28)
     y = y.reshape(-1, batch_size)
+    print('dddddd')
     test_acc = []
     train_acc = []
     for epoch in range(0, epochs):
@@ -38,13 +40,19 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80
             # Here we feed in training data and perform backprop according to the loss
             # Run the forward pass
             outputs = model.forward(x[i])
+            print('ddddddddeeeee')
             loss = criterion(outputs, y[i])
+            print('1')
             loss_list.append(loss.item())
+            print('2')
 
             # Backprop and perform Adam optimisation
             optimizer.zero_grad()
+            print('3')
             loss.backward()
+            print('4')
             optimizer.step()
+            print('4')
         # here the training and testing acc is tracked if indicated to the function
         if track_train_test_acc:
             train_acc.append(eval_cnn(model, x, y))
