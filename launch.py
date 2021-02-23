@@ -4,7 +4,7 @@ from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
 import pandas as pd
-from functions import train_cnn, eval_cnn
+from functions import train_cnn, eval_cnn, crossvalidationCNN
 from networks import LeNet5
 from networks import CustomNet
 from networks import linear_comb
@@ -26,17 +26,17 @@ def go(train, test):
     # fig = pcolor(x_test[600], cmap='gist_gray')
     # plt.show()
     # print('LeNet5')
-    lenet = CustomNet()
-    model, _, _, _ = train_cnn(lenet,x_train, y_train, x_test, y_test, track_train_test_acc=True)
+    # lenet = CustomNet()
+    # model, _, _, _ = train_cnn(lenet,x_train, y_train, x_test, y_test, track_train_test_acc=True)
     # acc = eval_cnn(model,x_test, y_test)
     # print(acc)
     print('CustomNet')
     custom = CustomNet()
-    print('helo')
-    model, _, _ , _= train_cnn(custom, x_train, y_train, x_test, y_test, batch_size=200)
-    print('ddd')
-    acc = eval_cnn(model,x_test, y_test)
-    print(acc)
+    train_acc, test_acc, m_list, change = crossvalidationCNN(custom, x_train, y_train, 10)
+    plotTrainTestPerformance(train_acc, test_acc, change, m_list)
+    # model, _, _ , _= train_cnn(custom, x_train, y_train, x_test, y_test, batch_size=200)
+    # acc = eval_cnn(model,x_test, y_test)
+    #print(acc)
     # print('linear ensample')
     # linear_co = linear_comb()
     # # have to adjust this you dont wanna track performance over epochs, just set it to False
@@ -52,3 +52,4 @@ if __name__ == "__main__":
     train = 'data/mnist_train.csv'
     test = 'data/mnist_test.csv'
     go(train,test)
+

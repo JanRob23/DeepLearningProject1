@@ -5,6 +5,8 @@ from torch.functional import F
 from torch.optim import Adam, SGD
 import time
 from networks import LeNet5
+from tqdm import tqdm
+import numpy as np
 
 
 
@@ -30,7 +32,6 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80
     print(batch_num)
     x = x.reshape(-1, batch_size, 1, 28, 28)
     y = y.reshape(-1, batch_size)
-    print('dddddd')
     test_acc = []
     train_acc = []
     for epoch in range(0, epochs):
@@ -40,19 +41,13 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=80
             # Here we feed in training data and perform backprop according to the loss
             # Run the forward pass
             outputs = model.forward(x[i])
-            print('ddddddddeeeee')
             loss = criterion(outputs, y[i])
-            print('wprks')
             loss_list.append(loss.item())
-            print('2')
 
             # Backprop and perform Adam optimisation
             optimizer.zero_grad()
-            print('3')
             loss.backward()
-            print('4')
             optimizer.step()
-            print('4')
         # here the training and testing acc is tracked if indicated to the function
         if track_train_test_acc:
             train_acc.append(eval_cnn(model, x, y))
@@ -84,3 +79,90 @@ def eval_cnn(model, x, y):
         if predicted[i] == y[i]:
             correct += 1
     return correct / total
+
+
+def crossvalidationCNN(model_used, x, y, k):
+    # setup the k-fold split
+    total = x.shape[0]
+    k = split_check(total, k)
+    bin_size = int(total / k)
+    folds_x = np.array(np.array_split(x, k))
+    folds_y = np.array(np.split(y, k))
+    acc_train_m = list()
+    acc_test_m = list()
+    m_list = list()
+
+    # define m range in this case m corresponds with epochs
+    # to change what is going to vary with m, mention in the train_cnn function
+    # eg. learning_rate = m, batch_size = m ...
+    # also declare what you change for the graph legend
+    # type 'architecture' if changing architecture, make there only be 1 step 
+    change = 'l2 regularization'
+    start = 0
+    stop = 1
+    step = 0.01
+
+    # new folder for each new run, except if ran size is 1
+    # file with list of ave accuracies
+    # plot 
+    best_m = 0
+    best_m_train = 0
+    best_m_acc = 0
+    m_range = np.arange(start, stop, step)
+    print(f'training and evaluating {k * len(m_range)} models')
+
+    for m in tqdm(m_range, desc='m values', position=0):  # loop over given m settings
+        # mFile = f'{newfile}/{change}_{m}'
+        # os.makedirs(mFile, exist_ok= True)
+        acc_train = list()
+        acc_test = list()
+        for fold in tqdm(range(0, k), desc='folds', position=1,
+                         leave=False):  # train a new model for each fold and for each m
+            train_x, train_y, test_x, test_y = get_fold(folds_x, folds_y, fold)
+            model, loss = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 200)
+            acc, _, _, _ = eval_cnn(model, train_x, train_y)
+            acc_train.append(acc)
+            acc, _, _, _ = eval_cnn(model, test_x, test_y)
+            acc_test.append(acc)
+        mean_train_acc = round(np.mean(acc_train), 4)
+        mean_test_acc = round(np.mean(acc_test), 4)
+        acc_train_m.append(mean_train_acc)
+        acc_test_m.append(mean_test_acc)
+        if mean_test_acc > best_m_acc:
+            best_m_acc = mean_test_acc
+            best_m_train = mean_train_acc
+            best_m = m
+        m_list.append(round(m, 4))
+    print(f'Best m: {best_m}\ntrain acc: {mean_train_acc}\ntest acc:{mean_test_acc}')
+    return acc_train_m, acc_test_m, m_list, change
+
+# returns the folds in separate training and testing data
+# the choice of which fold is used for testing data is indicated by the index n
+def get_fold(folds_x, folds_y, n):
+    test_x = folds_x[n]
+    test_y = folds_y[n]
+    temp = np.repeat(True, folds_x.shape[0])
+    temp[n] = False
+    train_x = folds_x[temp]
+    train_y = folds_y[temp]
+    train_x = np.concatenate(train_x, axis=0)
+    train_y = np.concatenate(train_y, axis=0)
+    return train_x, train_y, test_x, test_y
+
+
+# helper function to make sure data can be split up into k folds without causing shape issues,
+# if there is an issue, the closest number to k that will not cause problems will be chosen
+# with a preference to the higher number.
+def split_check(n, k):
+    if n % k == 0:
+        return k
+    u = 1
+    while n % (k + u) != 0 and (k - u < 2 or n % (k - u) != 0):
+        u += 1
+    if n % (k + u) == 0:
+        nk = k + u
+    elif n % (k - u) == 0:
+        nk = k - u
+    print(f'Warning: current K={k} for K-fold cross-validation would not divide folds correctly')
+    print(f'the new k: {nk} was chosen instead')
+    return nk
