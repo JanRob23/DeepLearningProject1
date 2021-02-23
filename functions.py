@@ -120,10 +120,15 @@ def crossvalidationCNN(model_used, x, y, k):
         for train, test in tqdm(kf, desc='folds', position=1, leave=False):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
             model, _, _ , _= train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 200)
+            print('hello')
             acc, _, _, _ = eval_cnn(model, train_x, train_y)
+            print('1')
             acc_train.append(acc)
+            print('2')
             acc = eval_cnn(model, test_x, test_y)
+            print('3')
             acc_test.append(acc)
+            print('4')
         mean_train_acc = round(np.mean(acc_train), 4)
         mean_test_acc = round(np.mean(acc_test), 4)
         acc_train_m.append(mean_train_acc)
