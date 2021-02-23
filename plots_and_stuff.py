@@ -10,8 +10,6 @@ def plotTrainTestPerformance(train, test, change, x_values=[]):
     else:
         plt.plot(x_values, train)
         plt.plot(x_values, test)
-    plt.plot(train)
-    plt.plot(test)
     axes = plt.gca()
     #axes.set_ylim([0,0.05 ])
     plt.xlabel(change)
