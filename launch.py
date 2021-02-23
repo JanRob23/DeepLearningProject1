@@ -1,13 +1,14 @@
-from cnn_functions import LeNet5
+from networks import LeNet5
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
 import pandas as pd
 from functions import train_cnn, eval_cnn
-from cnn_functions import LeNet5
-from cnn_functions import CustomNet
-
+from networks import LeNet5
+from networks import CustomNet
+from networks import linear_comb
+from plots_and_stuff import plotTrainTestPerformance
 
 def go(train, test):
     print('i am running')
@@ -24,16 +25,24 @@ def go(train, test):
     # print(y_test[600])
     # fig = pcolor(x_test[600], cmap='gist_gray')
     # plt.show()
-    print('LeNet5')
-    lenet = LeNet5()
-    model, _ = train_cnn(lenet,x_train, y_train)
-    acc = eval_cnn(model,x_test, y_test)
-    print(acc)
-    print('CustomNet') 
-    custom = CustomNet()
-    model, _ = train_cnn(custom, x_train, y_train)
-    acc = eval_cnn(model,x_test, y_test)
-    print(acc)
+    # print('LeNet5')
+    # lenet = LeNet5()
+    # model, _ = train_cnn(lenet,x_train, y_train)
+    # acc = eval_cnn(model,x_test, y_test)
+    # print(acc)
+    # print('CustomNet')
+    # custom = CustomNet()
+    # model, _ = train_cnn(custom, x_train, y_train)
+    # acc = eval_cnn(model,x_test, y_test)
+    # print(acc)
+    print('linear ensample')
+    linear_co = linear_comb()
+    # have to adjust this you dont wanna track performance over epochs, just set it to False
+    model, train_acc, test_acc = train_cnn(linear_co, x_train, y_train, x_test, y_test, track_train_test_acc=True)
+    acc = eval_cnn(model, x_test, y_test)
+    print('accuracy on testing:', acc)
+    # comment when you dont want plots for epoch
+    plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
 
 
 if __name__ == "__main__":
