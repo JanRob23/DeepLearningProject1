@@ -26,12 +26,12 @@ def go(train, test):
 
 
     #----------- CustomNet --------------#
-    print('CustomNet')
-    custom = CustomNet()
+    # print('CustomNet')
+    # custom = CustomNet()
 
     # epoch_eval_single(custom, x_train, y_train, x_test, y_test)
     # cross_val(custom, x_train, y_train, x_test, y_test)
-    test_model(custom, x_train, y_train, x_test, y_test)
+    # test_model(custom, x_train, y_train, x_test, y_test)
 
 
     #----------- Linear --------------#
@@ -44,7 +44,11 @@ def go(train, test):
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
     print("Linear Nets")
-    train_linear_models_plus_average(x_train, y_train, x_test, y_test)
+    val = 0
+    for i in range(0,10):
+        print("L2 reg value: ", val)
+        train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_train_test_acc=False, l2=val)
+        val += 0.0025
 
 def reshape_data(train, test):
     x_train, y_train = openMNIST(train)
