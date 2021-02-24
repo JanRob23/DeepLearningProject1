@@ -43,7 +43,8 @@ def go(train, test):
     # print('accuracy on testing:', acc)
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    # train_linear_models_plus_average(x_train, y_train, x_test, y_test)
+    print("Linear Nets")
+    train_linear_models_plus_average(x_train, y_train, x_test, y_test)
 
 def reshape_data(train, test):
     x_train, y_train = openMNIST(train)

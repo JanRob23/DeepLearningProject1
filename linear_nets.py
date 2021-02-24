@@ -14,6 +14,7 @@ class linear_one(nn.Module):
             nn.Dropout(p=dropout),
             nn.Linear(500, 10)
         )
+        self.l2 = 0
 
     def forward(self, x):
         x = x.view(-1, 28 * 28)
@@ -34,6 +35,7 @@ class linear_two(nn.Module):
             nn.Dropout(p=dropout),
             nn.Linear(250, 10)
         )
+        self.l2 = 0
 
     def forward(self, x):
         x = x.view(-1, 28 * 28)
@@ -60,6 +62,7 @@ class linear_three(nn.Module):
             nn.Dropout(p=dropout),
             nn.Linear(200, 10)
         )
+        self.l2 = 0
 
     def forward(self, x):
         x = x.view(-1, 28 * 28)
@@ -92,6 +95,7 @@ class linear_four(nn.Module):
             nn.Dropout(p=dropout),
             nn.Linear(100, 10)
         )
+        self.l2 = 0
 
     def forward(self, x):
         x = x.view(-1, 28 * 28)
@@ -133,6 +137,7 @@ class linear_five(nn.Module):
             nn.Dropout(p=dropout),
             nn.Linear(100, 10)
         )
+        self.l2 = 0
 
     def forward(self, x):
         x = x.view(-1, 28 * 28)
