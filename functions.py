@@ -34,7 +34,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
     y = y.reshape(-1, batch_size)
     test_acc = []
     train_acc = []
-    for epoch in range(0, epochs):
+    for epoch in tqdm(range(0, epochs)):
         # loop over the number of batches feeds in batch_size many images and performs backprob
         # then again and so on
         for i in range(0, int(batch_num)):
