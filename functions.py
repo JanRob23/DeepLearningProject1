@@ -8,10 +8,11 @@ from networks import LeNet5
 from tqdm import tqdm
 import numpy as np
 from sklearn.model_selection import KFold
+from linear_nets import linear_one, linear_two, linear_three, linear_four, linear_five
+from plots_and_stuff import plotTrainTestPerformance
 
 
-
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.01, l2_weight_decay=0.001, batch_size=200):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=100, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -135,3 +136,53 @@ def crossvalidationCNN(model_used, x, y, k):
     print(f'\nBest m: {best_m}\ntrain acc: {best_m_train}\ntest acc:{best_m_acc}')
     return acc_train_m, acc_test_m, m_list, change
 
+def train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_train_test_acc=True):
+    start = time.time()
+    mlp1, train_acc, test_acc = train_cnn(linear_one(), x_train, y_train, x_test, y_test, track_train_test_acc)
+    print("Accuracy of first mlp: " + str(eval_cnn(mlp1, x_test, y_test)))
+    if track_train_test_acc:
+        plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
+    mlp2, train_acc, test_acc = train_cnn(linear_two(), x_train, y_train, x_test, y_test, track_train_test_acc)
+    print("Accuracy of second mlp: " + str(eval_cnn(mlp2, x_test, y_test)))
+    if track_train_test_acc:
+        plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
+    mlp3, train_acc, test_acc = train_cnn(linear_three(), x_train, y_train, x_test, y_test, track_train_test_acc)
+    print("Accuracy of third mlp: " + str(eval_cnn(mlp3, x_test, y_test)))
+    if track_train_test_acc:
+        plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
+    mlp4, train_acc, test_acc = train_cnn(linear_four(), x_train, y_train, x_test, y_test, track_train_test_acc)
+    print("Accuracy of fourth mlp: " + str(eval_cnn(mlp4, x_test, y_test)))
+    if track_train_test_acc:
+        plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
+    mlp5, train_acc, test_acc = train_cnn(linear_five(), x_train, y_train, x_test, y_test, track_train_test_acc)
+    print("Accuracy of fifth mlp: " + str(eval_cnn(mlp5, x_test, y_test)))
+    if track_train_test_acc:
+        plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
+
+    x_test = x_test.reshape(-1, 1, 28, 28)
+    x_test = torch.from_numpy(x_test.copy())
+    y_test = torch.from_numpy(y_test.copy())
+    if torch.cuda.is_available():
+        x_test = x_test.cuda()
+        y_test = y_test.cuda()
+    x_test = x_test.float()
+    y_test = y_test.long()
+    out1 = mlp1.forward(x_test)
+    out2 = mlp2.forward(x_test)
+    out3 = mlp3.forward(x_test)
+    out4 = mlp4.forward(x_test)
+    out5 = mlp5.forward(x_test)
+
+    # verify this works
+    out_avg = (out1+out2+out3+out4+out5) / 5
+
+    total = y_test.size(0)
+    _, predicted = torch.max(out_avg.data, 1)
+    correct = 0
+
+    for i in range(total):
+        if predicted[i] == y_test[i]:
+            correct += 1
+    end = time.time()
+    print("This function took: " + str(end-start))
+    print("Accuracy of the averaged MLPs: " + str(correct/total))

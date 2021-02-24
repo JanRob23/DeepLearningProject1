@@ -4,27 +4,18 @@ from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
 import pandas as pd
-from functions import train_cnn, eval_cnn, crossvalidationCNN
+from functions import train_cnn, eval_cnn, crossvalidationCNN, train_linear_models_plus_average
 from networks import LeNet5
 from networks import CustomNet
 from networks import linear_comb
 from plots_and_stuff import plotTrainTestPerformance
-from sklearn.model_selection import KFold
-
-
-
-
-
 
 def go(train, test):
     print('i am running')
     print('---')
     x_train, y_train, x_test, y_test = reshape_data(train, test)
-    # confirmation plots
-    #confirmation_plots(x_test, y_test)
-
-    #----------- LeNet 5 --------------#
-
+    
+    #-----------LeNet 5 ---------------#
     print('LeNet5')
     lenet = LeNet5()
     model, _, _, _ = train_cnn(lenet,x_train, y_train, x_test, y_test, track_train_test_acc=True)
@@ -43,16 +34,16 @@ def go(train, test):
     #print(acc)
 
 
-    #----------- Linear Ensemble --------------#
-
+    #----------- Linear --------------#
     # print('linear ensample')
-    # linear_co = linear_comb()
-    # # # have to adjust this you dont wanna track performance over epochs, just set it to False
-    # model, train_acc, test_acc = train_cnn(linear_co, x_train, y_train, x_test, y_test, track_train_test_acc=False)
+    #linear_co = linear_comb()
+    # # have to adjust this you dont wanna track performance over epochs, just set it to False
+    #model, train_acc, test_acc = train_cnn(linear_co, x_train, y_train, x_test, y_test, track_train_test_acc=False)
     # acc = eval_cnn(model, x_test, y_test)
     # print('accuracy on testing:', acc)
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
+    train_linear_models_plus_average(x_train, y_train, x_test, y_test)
 
 def reshape_data(train, test):
     x_train, y_train = openMNIST(train)
