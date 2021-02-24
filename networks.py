@@ -105,7 +105,7 @@ class CustomNet(torch.nn.Module):
 
     def CustomNetLayersLinear(self):
         layers = nn.Sequential(
-            nn.Linear(16 * 5 * 8, 120),
+            nn.Linear(16 * 5 * 5, 120),
             nn.Linear(120, 84),
             nn.Linear(84, 10)
         )
