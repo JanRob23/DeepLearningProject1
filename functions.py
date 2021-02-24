@@ -12,7 +12,7 @@ from linear_nets import linear_one, linear_two, linear_three, linear_four, linea
 from plots_and_stuff import plotTrainTestPerformance
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=100, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.0005, l2_weight_decay=0.001, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -20,7 +20,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=10
     x = x.float()
     y = y.long()
     if torch.cuda.is_available():
-        #print('yay there is a gpu')
+        print('yay there is a gpu')
         model = model.cuda()
         x = x.cuda()
         y = y.cuda()
@@ -55,7 +55,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=10
             test_acc.append(eval_cnn(model, x_test, y_test))
     #print('I did my training')
     end = time.time()
-    #print('training took: ', (end-start))
+    print('training took: ', (end-start))
     return model, train_acc, test_acc
 
 def eval_cnn(model, x, y):
