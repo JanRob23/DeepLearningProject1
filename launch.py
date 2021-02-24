@@ -1,3 +1,4 @@
+from typing import Coroutine
 from networks import LeNet5
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import pcolor
@@ -18,9 +19,11 @@ def go(train, test):
     #-----------LeNet 5 ---------------#
     print('LeNet5')
     lenet = LeNet5()
-    model, _, _, _ = train_cnn(lenet,x_train, y_train, x_test, y_test, track_train_test_acc=True)
-    acc = eval_cnn(model,x_test, y_test)
-    print(acc)
+    train_acc, test_acc, m_list, change = crossvalidationCNN(lenet, x_train, y_train, 5)
+    plotTrainTestPerformance(train_acc, test_acc, change, m_list)
+    # model, _, _, _ = train_cnn(lenet,x_train, y_train, x_test, y_test, track_train_test_acc=True)
+    # acc = eval_cnn(model,x_test, y_test)
+    #print(acc)
 
 
     #----------- CustomNet --------------#
@@ -43,7 +46,7 @@ def go(train, test):
     # print('accuracy on testing:', acc)
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    train_linear_models_plus_average(x_train, y_train, x_test, y_test)
+    #train_linear_models_plus_average(x_train, y_train, x_test, y_test)
 
 def reshape_data(train, test):
     x_train, y_train = openMNIST(train)
