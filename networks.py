@@ -32,6 +32,7 @@ class AlexNet(nn.Module):
             nn.ReLU(inplace=True),
             nn.Linear(4096, num_classes),
         )
+        
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.features(x)
@@ -47,6 +48,7 @@ class LeNet5(torch.nn.Module):
         super(LeNet5, self).__init__()
         self.layers_conv = self.LeNetLayersConv()
         self.layers_linear = self.LeNetLayersLinear()
+        self.l2 = 0.002
 
     def forward(self, x):
         x = self.layers_conv(x)
@@ -79,6 +81,7 @@ class CustomNet(torch.nn.Module):
         super(CustomNet, self).__init__()
         self.layers_conv = self.CustomNetLayersConv()
         self.layers_linear = self.CustomNetLayersLinear()
+        self.l2 = 0.0035
 
     def forward(self, x):
         x = self.layers_conv(x)

@@ -5,7 +5,7 @@ from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
 import pandas as pd
-from functions import train_cnn, eval_cnn, crossvalidationCNN, train_linear_models_plus_average
+from functions import train_cnn, eval_cnn, crossvalidationCNN, train_linear_models_plus_average, test_model
 from networks import LeNet5
 from networks import CustomNet
 from networks import linear_comb
@@ -17,24 +17,21 @@ def go(train, test):
     x_train, y_train, x_test, y_test = reshape_data(train, test)
     
     #-----------LeNet 5 ---------------#
-    # print('LeNet5')
-    # lenet = LeNet5()
-    # train_acc, test_acc, m_list, change = crossvalidationCNN(lenet, x_train, y_train, 5)
-    # plotTrainTestPerformance(train_acc, test_acc, change, m_list)
-    # model, _, _, _ = train_cnn(lenet,x_train, y_train, x_test, y_test, track_train_test_acc=True)
-    # acc = eval_cnn(model,x_test, y_test)
-    #print(acc)
+    print('LeNet5')
+    leNet = LeNet5()
+
+    # epoch_eval_single(lenet, x_train, y_train, x_test, y_test)
+    # cross_val(lenet, x_train, y_train, x_test, y_test)
+    test_model(leNet, x_train, y_train, x_test, y_test)
 
 
     #----------- CustomNet --------------#
-    print('CustomNet')
-    custom = CustomNet()
-    train_acc, test_acc, m_list, change = crossvalidationCNN(custom, x_train, y_train, 5)
-    plotTrainTestPerformance(train_acc, test_acc, change, m_list)
-    # model, train_acc, test_acc = train_cnn(custom, x_train, y_train, x_test, y_test, batch_size=100, epochs= 100, l2_weight_decay=0, track_train_test_acc= True)
-    # plotTrainTestPerformance(train_acc, test_acc, 'epochs')
-    #acc = eval_cnn(model,x_test, y_test)
-    #print(acc)
+    # print('CustomNet')
+    # custom = CustomNet()
+
+    # epoch_eval_single(custom, x_train, y_train, x_test, y_test)
+    # cross_val(custom, x_train, y_train, x_test, y_test)
+    # test_model(custom, x_train, y_train, x_test, y_test)
 
 
     #----------- Linear --------------#
@@ -63,6 +60,17 @@ def confirmation_plots(x_test, y_test):
     print(y_test[600])
     fig = pcolor(x_test[600], cmap='gist_gray')
     plt.show()
+
+def epoch_eval_single(model, x_train, y_train, x_test, y_test):
+    model, train_acc, test_acc = train_cnn(model ,x_train, y_train, x_test, y_test, track_train_test_acc=True)
+    acc = eval_cnn(model,x_test, y_test)
+    print(acc)
+    plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
+
+def cross_val(model, x_train, y_train, x_test, y_test):
+    train_acc, test_acc, m_list, change = crossvalidationCNN(model, x_train, y_train, 5)
+    plotTrainTestPerformance(train_acc, test_acc, change, m_list)
+
 if __name__ == "__main__":
     # local path
     train = 'data/mnist_train.csv'

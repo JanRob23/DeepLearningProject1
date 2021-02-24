@@ -12,13 +12,15 @@ from linear_nets import linear_one, linear_two, linear_three, linear_four, linea
 from plots_and_stuff import plotTrainTestPerformance
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.0005, l2_weight_decay=0.001, batch_size=100):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.0005, l2_weight_decay=None, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
     y = torch.from_numpy(y.copy())
     x = x.float()
     y = y.long()
+    if not l2_weight_decay:
+        l2_weight_decay = model.l2 
     if torch.cuda.is_available():
         print('yay there is a gpu')
         model = model.cuda()
@@ -35,7 +37,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
     y = y.reshape(-1, batch_size)
     test_acc = []
     train_acc = []
-    for epoch in tqdm(range(0, epochs)):
+    for epoch in range(0, epochs):
         # loop over the number of batches feeds in batch_size many images and performs backprob
         # then again and so on
         for i in range(0, int(batch_num)):
@@ -102,9 +104,6 @@ def crossvalidationCNN(model_used, x, y, k):
     stop = 0.005
     step = 0.0005
 
-    # new folder for each new run, except if ran size is 1
-    # file with list of ave accuracies
-    # plot 
     best_m = 0
     best_m_train = 0
     best_m_acc = 0
@@ -112,8 +111,6 @@ def crossvalidationCNN(model_used, x, y, k):
     print(f'training and evaluating {k * len(m_range)} models')
 
     for m in tqdm(m_range, desc='m values', position=0):  # loop over given m settings
-        # mFile = f'{newfile}/{change}_{m}'
-        # os.makedirs(mFile, exist_ok= True)
         acc_train = list()
         acc_test = list()
         kf = KFold(n_splits=k)
@@ -186,3 +183,12 @@ def train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_tra
     end = time.time()
     print("This function took: " + str(end-start))
     print("Accuracy of the averaged MLPs: " + str(correct/total))
+
+
+def test_model(model, x_train, y_train, x_test, y_test):
+    accuracy = list()
+    for i in tqdm(range(10)):
+        model,_,_ = train_cnn(model, x_train, y_train, x_test, y_test)
+        acc_test = eval_cnn(model, x_test, y_test)
+        accuracy.append(acc_test)
+    print(f'Average accuracy: {np.mean(accuracy)}')
