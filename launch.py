@@ -27,10 +27,10 @@ def go(train, test):
 
 
     #----------- CustomNet --------------#
-    print('CustomNet')
-    custom = CustomNet()
-    train_acc, test_acc, m_list, change = crossvalidationCNN(custom, x_train, y_train, 5)
-    plotTrainTestPerformance(train_acc, test_acc, change, m_list)
+    # print('CustomNet')
+    # custom = CustomNet()
+    # train_acc, test_acc, m_list, change = crossvalidationCNN(custom, x_train, y_train, 5)
+    # plotTrainTestPerformance(train_acc, test_acc, change, m_list)
     # model, train_acc, test_acc = train_cnn(custom, x_train, y_train, x_test, y_test, batch_size=100, epochs= 100, l2_weight_decay=0, track_train_test_acc= True)
     # plotTrainTestPerformance(train_acc, test_acc, 'epochs')
     #acc = eval_cnn(model,x_test, y_test)
@@ -46,7 +46,8 @@ def go(train, test):
     # print('accuracy on testing:', acc)
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    # train_linear_models_plus_average(x_train, y_train, x_test, y_test)
+    print("Linear Nets")
+    train_linear_models_plus_average(x_train, y_train, x_test, y_test)
 
 def reshape_data(train, test):
     x_train, y_train = openMNIST(train)
