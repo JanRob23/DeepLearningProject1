@@ -97,8 +97,8 @@ def crossvalidationCNN(model_used, x, y, k):
     # also declare what you change for the graph legend
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'l2 regularization'
-    start = 0.005
-    stop = 0.008
+    start = 0
+    stop = 0.0
     step = 0.0001
 
     # new folder for each new run, except if ran size is 1

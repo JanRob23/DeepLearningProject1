@@ -88,19 +88,7 @@ class CustomNet(torch.nn.Module):
 
     def CustomNetLayersConv(self):
         layers = nn.Sequential(
-            nn.Conv2d(in_channels=1, out_channels=4, kernel_size=5, stride=1, padding=0, bias=True),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2),
-            nn.Conv2d(in_channels=4, out_channels=6, kernel_size=4, stride=1, padding=0, bias=True),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=6, out_channels=6, kernel_size=4, stride=1, padding=2, bias=True),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=6, out_channels=6, kernel_size=3, stride=1, padding=2, bias=True),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=6, out_channels=16, kernel_size=3, stride=1, padding=0, bias=True),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2)
-            )
+            
         return layers
 
     def CustomNetLayersLinear(self):
