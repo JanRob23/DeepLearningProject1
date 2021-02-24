@@ -17,21 +17,21 @@ def go(train, test):
     x_train, y_train, x_test, y_test = reshape_data(train, test)
     
     #-----------LeNet 5 ---------------#
-    print('LeNet5')
-    leNet = LeNet5()
+    # print('LeNet5')
+    # leNet = LeNet5()
 
     # epoch_eval_single(lenet, x_train, y_train, x_test, y_test)
     # cross_val(lenet, x_train, y_train, x_test, y_test)
-    test_model(leNet, x_train, y_train, x_test, y_test)
+    #test_model(leNet, x_train, y_train, x_test, y_test)
 
 
     #----------- CustomNet --------------#
-    # print('CustomNet')
-    # custom = CustomNet()
+    print('CustomNet')
+    custom = CustomNet()
 
     # epoch_eval_single(custom, x_train, y_train, x_test, y_test)
     # cross_val(custom, x_train, y_train, x_test, y_test)
-    # test_model(custom, x_train, y_train, x_test, y_test)
+    test_model(custom, x_train, y_train, x_test, y_test)
 
 
     #----------- Linear --------------#
