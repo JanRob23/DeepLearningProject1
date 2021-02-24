@@ -54,13 +54,6 @@ def go(train, test):
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
 
-
-if __name__ == "__main__":
-    # local path
-    train = 'data/mnist_train.csv'
-    test = 'data/mnist_test.csv'
-    go(train,test)
-
 def reshape_data(train, test):
     x_train, y_train = openMNIST(train)
     x_test, y_test = openMNIST(test)
@@ -76,3 +69,9 @@ def confirmation_plots(x_test, y_test):
     print(y_test[600])
     fig = pcolor(x_test[600], cmap='gist_gray')
     plt.show()
+if __name__ == "__main__":
+    # local path
+    train = 'data/mnist_train.csv'
+    test = 'data/mnist_test.csv'
+    go(train,test)
+
