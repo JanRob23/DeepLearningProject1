@@ -13,15 +13,13 @@ from linear_nets import linear_one, linear_two, linear_three, linear_four, linea
 from plots_and_stuff import plotTrainTestPerformance
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
     y = torch.from_numpy(y.copy())
     x = x.float()
     y = y.long()
-    if not l2_weight_decay:
-        l2_weight_decay = model.l2 
     if torch.cuda.is_available():
         print('yay there is a gpu')
         model = model.cuda()
@@ -186,10 +184,17 @@ def train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_tra
     print("Accuracy of the averaged MLPs: " + str(correct/total))
 
 
-def test_model(model, x_train, y_train, x_test, y_test):
+def test_model(model, x_train, y_train, x_test, y_test, settings = None):
+    if settings: 
+        lr = settings["learning_rate"]
+        l2 = settings['l2']
+
     accuracy = list()
     for i in tq(range(10)):
-        model,_,_ = train_cnn(model, x_train, y_train, x_test, y_test)
+        if settings:
+            model,_,_ = train_cnn(model, x_train, y_train, x_test, y_test, learningRate= lr, l2_weight_decay= l2)
+        else:
+            model,_,_ = train_cnn(model, x_train, y_train, x_test, y_test)
         acc_test = eval_cnn(model, x_test, y_test)
         accuracy.append(acc_test)
     print(f'Average accuracy: {np.mean(accuracy)}')

@@ -3,52 +3,19 @@ import torch.nn as nn
 import torch.nn.functional
 import numpy as np
 
-class AlexNet(nn.Module):
-
-    def __init__(self, num_classes: int = 1000) -> None:
-        super(AlexNet, self).__init__()
-        self.features = nn.Sequential(
-            nn.Conv2d(1, 64, kernel_size=11, stride=4, padding=2),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=3, stride=2),
-            nn.Conv2d(64, 192, kernel_size=5, padding=2),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=3, stride=2),
-            nn.Conv2d(192, 384, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(384, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(256, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=3, stride=2),
-        )
-        self.avgpool = nn.AdaptiveAvgPool2d((6, 6))
-        self.classifier = nn.Sequential(
-            nn.Dropout(),
-            nn.Linear(256 * 6 * 6, 4096),
-            nn.ReLU(inplace=True),
-            nn.Dropout(),
-            nn.Linear(4096, 4096),
-            nn.ReLU(inplace=True),
-            nn.Linear(4096, num_classes),
-        )
-        
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.features(x)
-        x = self.avgpool(x)
-        x = torch.flatten(x, 1)
-        x = self.classifier(x)
-        return x
 
 
 class LeNet5(torch.nn.Module):
 
-    def __init__(self):
+    def __init__(self, drop = False):
         super(LeNet5, self).__init__()
         self.layers_conv = self.LeNetLayersConv()
-        self.layers_linear = self.LeNetLayersLinear()
-        self.l2 = 0.002
+        self.drop = drop
+        if self.drop:
+            self.layers_linear = self.LeNetLayersLinearDrop()
+        else:
+            self.layers_linear = self.LeNetLayersLinear()
+        
 
     def forward(self, x):
         x = self.layers_conv(x)
@@ -67,11 +34,18 @@ class LeNet5(torch.nn.Module):
             )
         return layers
 
+    def LeNetLayersLinearDrop(self):
+        layers = nn.Sequential(
+            nn.Dropout(p = 0.25),
+            nn.Linear(16 * 5 * 5, 120),
+            nn.Dropout(p = 0.25),
+            nn.Linear(120, 84),
+            nn.Linear(84, 10)
+        )
+        return layers
     def LeNetLayersLinear(self):
         layers = nn.Sequential(
-            nn.Dropout(),
             nn.Linear(16 * 5 * 5, 120),
-            nn.Dropout(),
             nn.Linear(120, 84),
             nn.Linear(84, 10)
         )
@@ -83,7 +57,6 @@ class CustomNet(torch.nn.Module):
         super(CustomNet, self).__init__()
         self.layers_conv = self.CustomNetLayersConv()
         self.layers_linear = self.CustomNetLayersLinear()
-        self.l2 = 0.0035
 
     def forward(self, x):
         x = self.layers_conv(x)
@@ -106,9 +79,7 @@ class CustomNet(torch.nn.Module):
 
     def CustomNetLayersLinear(self):
         layers = nn.Sequential(
-            nn.Dropout(),
             nn.Linear(16 * 5 * 5, 120),
-            nn.Dropout(),
             nn.Linear(120, 84),
             nn.Linear(84, 10)
         )
