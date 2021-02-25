@@ -6,7 +6,7 @@ from torch.optim import Adam, SGD
 import time
 from networks import LeNet5
 from tqdm import tqdm
-from tqdm.notebook import tqdm as tq
+#from tqdm as tdqm
 import numpy as np
 from sklearn.model_selection import KFold
 from linear_nets import linear_one, linear_two, linear_three, linear_four, linear_five
@@ -23,7 +23,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
     if not l2_weight_decay:
         l2_weight_decay = model.l2 
     if torch.cuda.is_available():
-        print('yay there is a gpu')
+        #print('yay there is a gpu')
         model = model.cuda()
         x = x.cuda()
         y = y.cuda()
@@ -101,9 +101,9 @@ def crossvalidationCNN(model_used, x, y, k):
     # also declare what you change for the graph legend
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'Learning rate'
-    start = 0.0001
-    stop = 0.01
-    step = 0.0005
+    start =0.000001
+    stop = 0.0005
+    step = 0.0001
 
     best_m = 0
     best_m_train = 0
@@ -111,11 +111,11 @@ def crossvalidationCNN(model_used, x, y, k):
     m_range = np.arange(start, stop, step)
     print(f'training and evaluating {k * len(m_range)} models')
 
-    for m in tq(m_range, desc='m values', position=0):  # loop over given m settings
+    for m in tqdm(m_range, desc='m values', position=0):  # loop over given m settings
         acc_train = list()
         acc_test = list()
         kf = KFold(n_splits=k)
-        for train, test in tq(kf.split(x), desc= 'folds', position= 1, leave= False):
+        for train, test in kf.split(x):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
             model , train_acc, test_acc = train_cnn(model_used, train_x, train_y, test_x, test_y, learningRate=m, batch_size=100, epochs=40)
             acc = eval_cnn(model, train_x, train_y)
