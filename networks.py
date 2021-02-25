@@ -69,7 +69,9 @@ class LeNet5(torch.nn.Module):
 
     def LeNetLayersLinear(self):
         layers = nn.Sequential(
+            nn.Dropout(),
             nn.Linear(16 * 5 * 5, 120),
+            nn.Dropout(),
             nn.Linear(120, 84),
             nn.Linear(84, 10)
         )
@@ -104,7 +106,9 @@ class CustomNet(torch.nn.Module):
 
     def CustomNetLayersLinear(self):
         layers = nn.Sequential(
+            nn.Dropout(),
             nn.Linear(16 * 5 * 5, 120),
+            nn.Dropout(),
             nn.Linear(120, 84),
             nn.Linear(84, 10)
         )

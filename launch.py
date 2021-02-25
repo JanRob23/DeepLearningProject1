@@ -44,12 +44,12 @@ def go(train, test):
     # print('accuracy on testing:', acc)
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    print("Linear Nets")
-    cross_val(linear_one(dropout=0.25), x_train, y_train, x_test, y_test)
-    cross_val(linear_two(dropout=0.25), x_train, y_train, x_test, y_test)
-    cross_val(linear_three(dropout=0.25), x_train, y_train, x_test, y_test)
-    cross_val(linear_four(dropout=0.25), x_train, y_train, x_test, y_test)
-    cross_val(linear_five(dropout=0.25), x_train, y_train, x_test, y_test)
+    # print("Linear Nets")
+    # cross_val(linear_one(dropout=0.25), x_train, y_train, x_test, y_test)
+    # cross_val(linear_two(dropout=0.25), x_train, y_train, x_test, y_test)
+    # cross_val(linear_three(dropout=0.25), x_train, y_train, x_test, y_test)
+    # cross_val(linear_four(dropout=0.25), x_train, y_train, x_test, y_test)
+    # cross_val(linear_five(dropout=0.25), x_train, y_train, x_test, y_test)
 
 
 def reshape_data(train, test):
