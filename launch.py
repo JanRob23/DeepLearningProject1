@@ -17,8 +17,7 @@ def go(train, test):
     print('---')
     x_train, y_train, x_test, y_test = reshape_data(train, test)
     
-    #-----------LeNet 5 ---------------#
-<<<<<<< HEAD
+    #-----------LeNet 5 ---------------
     print('LeNet5 default')
     sets = {'learning_rate':0.0005, 'l2': 0}
     leNet = LeNet5()
@@ -48,11 +47,6 @@ def go(train, test):
 
 
 
-=======
-    # print('LeNet5')
-    # leNet = LeNet5()
-    #
->>>>>>> a71f5635d13aa0c2b0c2597307f24cd9b0776e5e
     # epoch_eval_single(leNet, x_train, y_train, x_test, y_test)
     # # cross_val(lenet, x_train, y_train, x_test, y_test)
     # test_model(leNet, x_train, y_train, x_test, y_test)
@@ -61,7 +55,7 @@ def go(train, test):
     #----------- CustomNet --------------#
     # print('CustomNet')
     # custom = CustomNet()
-    #
+
     # epoch_eval_single(custom, x_train, y_train, x_test, y_test)
     # # cross_val(custom, x_train, y_train, x_test, y_test)
     # test_model(custom, x_train, y_train, x_test, y_test)
@@ -76,12 +70,12 @@ def go(train, test):
     # print('accuracy on testing:', acc)
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    print("Linear Nets")
-    cross_val(linear_one(dropout=0.25), x_train, y_train, x_test, y_test)
-    cross_val(linear_two(dropout=0.25), x_train, y_train, x_test, y_test)
-    cross_val(linear_three(dropout=0.25), x_train, y_train, x_test, y_test)
-    cross_val(linear_four(dropout=0.25), x_train, y_train, x_test, y_test)
-    cross_val(linear_five(dropout=0.25), x_train, y_train, x_test, y_test)
+    # print("Linear Nets")
+    # cross_val(linear_one(dropout=0.25), x_train, y_train, x_test, y_test)
+    # cross_val(linear_two(dropout=0.25), x_train, y_train, x_test, y_test)
+    # cross_val(linear_three(dropout=0.25), x_train, y_train, x_test, y_test)
+    # cross_val(linear_four(dropout=0.25), x_train, y_train, x_test, y_test)
+    # cross_val(linear_five(dropout=0.25), x_train, y_train, x_test, y_test)
 
 
 def reshape_data(train, test):
