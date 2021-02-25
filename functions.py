@@ -5,7 +5,7 @@ from torch.functional import F
 from torch.optim import Adam, SGD
 import time
 from networks import LeNet5
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 #from tqdm as tdqm
 import numpy as np
 from sklearn.model_selection import KFold
