@@ -70,8 +70,8 @@ def go(train, test):
     # print('accuracy on testing:', acc)
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    print("Linear Nets")
-    train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_train_test_acc=False)
+    print("Linear Nets, best LR and stuff")
+    train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_train_test_acc=True)
     # cross_val(linear_one(dropout=0.25), x_train, y_train, x_test, y_test)
     # cross_val(linear_two(dropout=0.25), x_train, y_train, x_test, y_test)
     # cross_val(linear_three(dropout=0.25), x_train, y_train, x_test, y_test)

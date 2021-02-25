@@ -13,7 +13,7 @@ from linear_nets import linear_one, linear_two, linear_three, linear_four, linea
 from plots_and_stuff import plotTrainTestPerformance
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.01, l2_weight_decay=0, batch_size=100):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -134,23 +134,23 @@ def crossvalidationCNN(model_used, x, y, k):
 
 def train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_train_test_acc=True, l2=0):
     start = time.time()
-    mlp1, train_acc, test_acc = train_cnn(linear_one(dropout=0), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2)
+    mlp1, train_acc, test_acc = train_cnn(linear_one(dropout=0.25), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2, learningRate=0.0004)
     print("Accuracy of first mlp: " + str(eval_cnn(mlp1, x_test, y_test)))
     if track_train_test_acc:
         plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    mlp2, train_acc, test_acc = train_cnn(linear_two(dropout=0), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2)
+    mlp2, train_acc, test_acc = train_cnn(linear_two(dropout=0.25), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2, learningRate=0.0003)
     print("Accuracy of second mlp: " + str(eval_cnn(mlp2, x_test, y_test)))
     if track_train_test_acc:
         plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    mlp3, train_acc, test_acc = train_cnn(linear_three(dropout=0), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2)
+    mlp3, train_acc, test_acc = train_cnn(linear_three(dropout=0.25), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2, learningRate=0.0003)
     print("Accuracy of third mlp: " + str(eval_cnn(mlp3, x_test, y_test)))
     if track_train_test_acc:
         plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    mlp4, train_acc, test_acc = train_cnn(linear_four(dropout=0), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2)
+    mlp4, train_acc, test_acc = train_cnn(linear_four(dropout=0.25), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2, learningRate=0.0003)
     print("Accuracy of fourth mlp: " + str(eval_cnn(mlp4, x_test, y_test)))
     if track_train_test_acc:
         plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    mlp5, train_acc, test_acc = train_cnn(linear_five(dropout=0), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2)
+    mlp5, train_acc, test_acc = train_cnn(linear_five(dropout=0.25), x_train, y_train, x_test, y_test, track_train_test_acc, l2_weight_decay=l2, learningRate=0.0003)
     print("Accuracy of fifth mlp: " + str(eval_cnn(mlp5, x_test, y_test)))
     if track_train_test_acc:
         plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
