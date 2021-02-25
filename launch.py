@@ -8,8 +8,9 @@ import pandas as pd
 from functions import train_cnn, eval_cnn, crossvalidationCNN, train_linear_models_plus_average, test_model
 from networks import LeNet5
 from networks import CustomNet
-from networks import linear_comb
+from linear_nets import linear_one, linear_two, linear_three, linear_four, linear_five
 from plots_and_stuff import plotTrainTestPerformance
+import time
 
 def go(train, test):
     print('i am running')
@@ -44,11 +45,12 @@ def go(train, test):
     # comment when you dont want plots for epoch
     # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
     print("Linear Nets")
-    val = 0
-    for i in range(0,10):
-        print("L2 reg value: ", val)
-        train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_train_test_acc=False, l2=val)
-        val += 0.0025
+    cross_val(linear_one(dropout=0.25), x_train, y_train, x_test, y_test)
+    cross_val(linear_two(dropout=0.25), x_train, y_train, x_test, y_test)
+    cross_val(linear_three(dropout=0.25), x_train, y_train, x_test, y_test)
+    cross_val(linear_four(dropout=0.25), x_train, y_train, x_test, y_test)
+    cross_val(linear_five(dropout=0.25), x_train, y_train, x_test, y_test)
+
 
 def reshape_data(train, test):
     x_train, y_train = openMNIST(train)
@@ -73,8 +75,11 @@ def epoch_eval_single(model, x_train, y_train, x_test, y_test):
     plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
 
 def cross_val(model, x_train, y_train, x_test, y_test):
+    start = time.time()
     train_acc, test_acc, m_list, change = crossvalidationCNN(model, x_train, y_train, 5)
     plotTrainTestPerformance(train_acc, test_acc, change, m_list)
+    end = time.time()
+    print("cross_val took: ", (start-end))
 
 if __name__ == "__main__":
     # local path

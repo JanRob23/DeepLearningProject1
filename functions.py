@@ -13,7 +13,7 @@ from linear_nets import linear_one, linear_two, linear_three, linear_four, linea
 from plots_and_stuff import plotTrainTestPerformance
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.0005, l2_weight_decay=None, batch_size=100):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -58,7 +58,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=50
             test_acc.append(eval_cnn(model, x_test, y_test))
     #print('I did my training')
     end = time.time()
-    print('training took: ', (end-start))
+    #print('training took: ', (end-start))
     return model, train_acc, test_acc
 
 def eval_cnn(model, x, y):
@@ -100,9 +100,9 @@ def crossvalidationCNN(model_used, x, y, k):
     # eg. learning_rate = m, batch_size = m ...
     # also declare what you change for the graph legend
     # type 'architecture' if changing architecture, make there only be 1 step 
-    change = 'l2 regularization'
-    start = 0.003
-    stop = 0.005
+    change = 'Learning rate'
+    start = 0.0001
+    stop = 0.01
     step = 0.0005
 
     best_m = 0
@@ -117,7 +117,7 @@ def crossvalidationCNN(model_used, x, y, k):
         kf = KFold(n_splits=k)
         for train, test in tq(kf.split(x), desc= 'folds', position= 1, leave= False):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
-            model , train_acc, test_acc = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 100, epochs=40)
+            model , train_acc, test_acc = train_cnn(model_used, train_x, train_y, test_x, test_y, learningRate=m, batch_size=100, epochs=40)
             acc = eval_cnn(model, train_x, train_y)
             acc_train.append(acc)
             acc = eval_cnn(model, test_x, test_y)
