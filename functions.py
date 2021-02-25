@@ -6,6 +6,7 @@ from torch.optim import Adam, SGD
 import time
 from networks import LeNet5
 from tqdm import tqdm
+from tqdm.notebook import tqdm as tq
 import numpy as np
 from sklearn.model_selection import KFold
 from linear_nets import linear_one, linear_two, linear_three, linear_four, linear_five
@@ -110,11 +111,11 @@ def crossvalidationCNN(model_used, x, y, k):
     m_range = np.arange(start, stop, step)
     print(f'training and evaluating {k * len(m_range)} models')
 
-    for m in tqdm(m_range, desc='m values', position=0):  # loop over given m settings
+    for m in tq(m_range, desc='m values', position=0):  # loop over given m settings
         acc_train = list()
         acc_test = list()
         kf = KFold(n_splits=k)
-        for train, test in kf.split(x):
+        for train, test in tq(kf.split(x), desc= 'folds', position= 1, leave= False):
             train_x, test_x, train_y, test_y = x[train], x[test], y[train], y[test]  # train a new model for each fold and for each m
             model , train_acc, test_acc = train_cnn(model_used, train_x, train_y, test_x, test_y, l2_weight_decay=m, batch_size = 100, epochs=40)
             acc = eval_cnn(model, train_x, train_y)
@@ -187,7 +188,7 @@ def train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_tra
 
 def test_model(model, x_train, y_train, x_test, y_test):
     accuracy = list()
-    for i in tqdm(range(10)):
+    for i in tq(range(10)):
         model,_,_ = train_cnn(model, x_train, y_train, x_test, y_test)
         acc_test = eval_cnn(model, x_test, y_test)
         accuracy.append(acc_test)

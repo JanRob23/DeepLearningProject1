@@ -17,21 +17,21 @@ def go(train, test):
     x_train, y_train, x_test, y_test = reshape_data(train, test)
     
     #-----------LeNet 5 ---------------#
-    # print('LeNet5')
-    # leNet = LeNet5()
+    print('LeNet5')
+    leNet = LeNet5()
 
-    # epoch_eval_single(lenet, x_train, y_train, x_test, y_test)
+    epoch_eval_single(leNet, x_train, y_train, x_test, y_test)
     # cross_val(lenet, x_train, y_train, x_test, y_test)
-    #test_model(leNet, x_train, y_train, x_test, y_test)
+    test_model(leNet, x_train, y_train, x_test, y_test)
 
 
     #----------- CustomNet --------------#
-    # print('CustomNet')
-    # custom = CustomNet()
+    print('CustomNet')
+    custom = CustomNet()
 
-    # epoch_eval_single(custom, x_train, y_train, x_test, y_test)
+    epoch_eval_single(custom, x_train, y_train, x_test, y_test)
     # cross_val(custom, x_train, y_train, x_test, y_test)
-    # test_model(custom, x_train, y_train, x_test, y_test)
+    test_model(custom, x_train, y_train, x_test, y_test)
 
 
     #----------- Linear --------------#
@@ -67,7 +67,7 @@ def confirmation_plots(x_test, y_test):
     plt.show()
 
 def epoch_eval_single(model, x_train, y_train, x_test, y_test):
-    model, train_acc, test_acc = train_cnn(model ,x_train, y_train, x_test, y_test, track_train_test_acc=True)
+    model, train_acc, test_acc = train_cnn(model ,x_train, y_train, x_test, y_test, track_train_test_acc=True, epochs= 100)
     acc = eval_cnn(model,x_test, y_test)
     print(acc)
     plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
