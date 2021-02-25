@@ -5,7 +5,7 @@ from torch.functional import F
 from torch.optim import Adam, SGD
 import time
 from networks import LeNet5
-from tqdm.notebook import tqdm
+from tqdm.notebook import tqdm 
 #from tqdm as tdqm
 import numpy as np
 from sklearn.model_selection import KFold
@@ -190,7 +190,7 @@ def test_model(model, x_train, y_train, x_test, y_test, settings = None):
         l2 = settings['l2']
 
     accuracy = list()
-    for i in tq(range(10)):
+    for i in tqdm(range(10)):
         if settings:
             model,_,_ = train_cnn(model, x_train, y_train, x_test, y_test, learningRate= lr, l2_weight_decay= l2)
         else:
