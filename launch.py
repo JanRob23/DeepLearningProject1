@@ -18,37 +18,39 @@ def go(train, test):
     x_train, y_train, x_test, y_test = reshape_data(train, test)
     
     #-----------LeNet 5 ---------------
-    print('LeNet5 default')
-    sets = {'learning_rate':0.0005, 'l2': 0}
+    # print('LeNet5 default')
+    # sets = {'learning_rate':0.0005, 'l2': 0}
+    # leNet = LeNet5()
+    # test_model(leNet, x_train, y_train, x_test, y_test, sets)
+
+    # print('LeNet5 learning rate: 0.01')
+    # sets = {'learning_rate':0.01, 'l2': 0}
+    # leNet = LeNet5()
+    # test_model(leNet, x_train, y_train, x_test, y_test, sets)
+
+    # print('LeNet5 l2: 0.002')
+    # sets = {'learning_rate':0.0005, 'l2': 0.002}
+    # leNet = LeNet5()
+    # test_model(leNet, x_train, y_train, x_test, y_test, sets)
+
+    # print('LeNet5 drop: 0.25')
+    # sets = {'learning_rate':0.0005, 'l2': 0}
+    # leNet = LeNet5(drop= True)
+    # test_model(leNet, x_train, y_train, x_test, y_test, sets)
+
+    # print('CustomNet')
+    # sets = {'learning_rate':0.0005, 'l2': 0}
+    # custom = CustomNet()
+    # test_model(custom, x_train, y_train, x_test, y_test, sets)
+
+
+
+
+
+
     leNet = LeNet5()
-    test_model(leNet, x_train, y_train, x_test, y_test, sets)
-
-    print('LeNet5 learning rate: 0.01')
-    sets = {'learning_rate':0.01, 'l2': 0}
-    leNet = LeNet5()
-    test_model(leNet, x_train, y_train, x_test, y_test, sets)
-
-    print('LeNet5 l2: 0.002')
-    sets = {'learning_rate':0.0005, 'l2': 0.002}
-    leNet = LeNet5()
-    test_model(leNet, x_train, y_train, x_test, y_test, sets)
-
-    print('LeNet5 drop: 0.25')
-    sets = {'learning_rate':0.0005, 'l2': 0}
-    leNet = LeNet5(drop= True)
-    test_model(leNet, x_train, y_train, x_test, y_test, sets)
-
-    print('CustomNet')
-    sets = {'learning_rate':0.0005, 'l2': 0}
-    custom = CustomNet()
-    test_model(custom, x_train, y_train, x_test, y_test, sets)
-
-
-
-
-
-    # epoch_eval_single(leNet, x_train, y_train, x_test, y_test)
-    # # cross_val(lenet, x_train, y_train, x_test, y_test)
+    #  epoch_eval_single(leNet, x_train, y_train, x_test, y_test)
+    cross_val(leNet, x_train, y_train, x_test, y_test)
     # test_model(leNet, x_train, y_train, x_test, y_test)
 
 
