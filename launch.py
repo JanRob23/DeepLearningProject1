@@ -26,9 +26,9 @@ def go(train, test):
     # sets = {'learning_rate':0.01, 'l2': 0}
     # leNet = LeNet5()
     # test_model(leNet, x_train, y_train, x_test, y_test, sets)
-    # print('wf')
-    # sets = {'learning_rate':0.001, 'l2': 0.002}
-    # leNet = LeNet5()
+    print('wf')
+    sets = {'learning_rate':0.0002, 'l2': 0.002}
+    leNet = LeNet5()
     # test_model(leNet, x_train, y_train, x_test, y_test, sets)
     # print('LeNet5 drop: 0.25')
     # sets = {'learning_rate':0.0005, 'l2': 0}
@@ -43,9 +43,9 @@ def go(train, test):
 
 
 
-    leNet = LeNet5()
-    #  epoch_eval_single(leNet, x_train, y_train, x_test, y_test)
-    cross_val(leNet, x_train, y_train, x_test, y_test)
+    # leNet = LeNet5()
+    # #  epoch_eval_single(leNet, x_train, y_train, x_test, y_test)
+    # cross_val(leNet, x_train, y_train, x_test, y_test)
     # test_model(leNet, x_train, y_train, x_test, y_test)
 
 
