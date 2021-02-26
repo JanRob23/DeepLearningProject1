@@ -13,7 +13,7 @@ from linear_nets import linear_one, linear_two, linear_three, linear_four, linea
 from plots_and_stuff import plotTrainTestPerformance
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=1, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
