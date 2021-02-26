@@ -13,7 +13,7 @@ from linear_nets import linear_one, linear_two, linear_three, linear_four, linea
 from plots_and_stuff import plotTrainTestPerformance
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.0005, l2_weight_decay=0.002, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -99,9 +99,9 @@ def crossvalidationCNN(model_used, x, y, k):
     # also declare what you change for the graph legend
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'Learning rate'
-    start =0.000001
-    stop = 0.0005
-    step = 0.0001
+    start =0.00001
+    stop = 0.00501
+    step = 0.001
 
     best_m = 0
     best_m_train = 0
