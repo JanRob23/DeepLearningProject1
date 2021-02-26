@@ -99,9 +99,9 @@ def crossvalidationCNN(model_used, x, y, k):
     # also declare what you change for the graph legend
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'Learning rate'
-    start =0.00001
-    stop = 0.00501
-    step = 0.001
+    start =0.0011
+    stop = 0.0001
+    step = 0.0001
 
     best_m = 0
     best_m_train = 0
