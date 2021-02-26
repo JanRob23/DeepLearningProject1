@@ -9,7 +9,7 @@ The follwing code is included in the different files:
   - launch: here all functions are called and the go function is implemented to run the project from google colab
 
 To run this project on Google colab simply execute the following code on colab: \
-!git clone https://github.com/JanRob23/DeepLearningProject1.git\
+!git clone https://github.com/JanRob23/DeepLearningProject1.git \
 from google.colab import drive\
 drive.mount("/content/drive")\
 (change to where MNIST is located in your drive)\
