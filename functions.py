@@ -101,7 +101,7 @@ def crossvalidationCNN(model_used, x, y, k):
     change = 'Learning rate'
     start =0.0011
     stop = 0.0001
-    step = 0.0001
+    step = -0.0001
 
     best_m = 0
     best_m_train = 0
