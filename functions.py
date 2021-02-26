@@ -4,7 +4,7 @@ import torch.nn as nn
 from torch.functional import F
 from torch.optim import Adam, SGD
 import time
-from networks import LeNet5
+from CNNs import LeNet5
 from tqdm.notebook import tqdm 
 #from tqdm as tdqm
 import numpy as np
@@ -13,7 +13,7 @@ from linear_nets import linear_one, linear_two, linear_three, linear_four, linea
 from plots_and_stuff import plotTrainTestPerformance
 
 
-def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.0005, l2_weight_decay=0.002, batch_size=100):
+def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40, learningRate=0.0005, l2_weight_decay=0, batch_size=100):
     start = time.time()
     model = model.float()
     x = torch.from_numpy(x.copy())
@@ -21,14 +21,13 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40
     x = x.float()
     y = y.long()
     if torch.cuda.is_available():
-        #print('yay there is a gpu')
         model = model.cuda()
         x = x.cuda()
         y = y.cuda()
     optimizer = Adam(model.parameters(), lr=learningRate, weight_decay=l2_weight_decay)
     criterion = nn.CrossEntropyLoss()
     loss_list = []
-    # batch sizes are claculated and sorted, by defaut batchsize is entire dataset
+    # batch sizes are calculated and sorted, by defaut batchsize is entire dataset
     if not batch_size or batch_size > x.shape[0]:
         batch_size = x.shape[0]
     batch_num = x.shape[0] / batch_size
@@ -54,7 +53,7 @@ def train_cnn(model, x, y, x_test, y_test, track_train_test_acc=False, epochs=40
         if track_train_test_acc:
             train_acc.append(eval_cnn(model, x, y))
             test_acc.append(eval_cnn(model, x_test, y_test))
-    #print('I did my training')
+
     end = time.time()
     print('training took: ', (end-start))
     return model, train_acc, test_acc
@@ -99,9 +98,9 @@ def crossvalidationCNN(model_used, x, y, k):
     # also declare what you change for the graph legend
     # type 'architecture' if changing architecture, make there only be 1 step 
     change = 'Learning rate'
-    start =0.0011
-    stop = 0.0001
-    step = -0.0001
+    start =0.000001
+    stop = 0.0005
+    step = 0.0001
 
     best_m = 0
     best_m_train = 0
@@ -169,7 +168,7 @@ def train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_tra
     out4 = mlp4.forward(x_test)
     out5 = mlp5.forward(x_test)
 
-    # verify this works
+    # compute average of the 5 MLPs
     out_avg = (out1+out2+out3+out4+out5) / 5
 
     total = y_test.size(0)
@@ -182,6 +181,7 @@ def train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_tra
     end = time.time()
     print("This function took: " + str(end-start))
     print("Accuracy of the averaged MLPs: " + str(correct/total))
+    return correct / total
 
 
 def test_model(model, x_train, y_train, x_test, y_test, settings = None):

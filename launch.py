@@ -1,13 +1,13 @@
 from typing import Coroutine
-from networks import LeNet5
+from CNNs import LeNet5
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import pcolor
 from fileIO import openMNIST
 import numpy as np
 import pandas as pd
 from functions import train_cnn, eval_cnn, crossvalidationCNN, train_linear_models_plus_average, test_model
-from networks import LeNet5
-from networks import CustomNet
+from CNNs import LeNet5
+from CNNs import CustomNet
 from linear_nets import linear_one, linear_two, linear_three, linear_four, linear_five
 from plots_and_stuff import plotTrainTestPerformance
 import time
@@ -16,24 +16,31 @@ def go(train, test):
     print('i am running')
     print('---')
     x_train, y_train, x_test, y_test = reshape_data(train, test)
-    
+
+
+
+
     #-----------LeNet 5 ---------------
     # print('LeNet5 default')
     # sets = {'learning_rate':0.0005, 'l2': 0}
     # leNet = LeNet5()
     # test_model(leNet, x_train, y_train, x_test, y_test, sets)
+    #
     # print('LeNet5 learning rate: 0.01')
     # sets = {'learning_rate':0.01, 'l2': 0}
     # leNet = LeNet5()
     # test_model(leNet, x_train, y_train, x_test, y_test, sets)
-    print('wf')
-    sets = {'learning_rate':0.0002, 'l2': 0.002}
+    #
+    print('LeNet5 l2: 0.002')
+    sets = {'learning_rate':0.0005, 'l2': 0.002}
     leNet = LeNet5()
     test_model(leNet, x_train, y_train, x_test, y_test, sets)
+    #
     # print('LeNet5 drop: 0.25')
     # sets = {'learning_rate':0.0005, 'l2': 0}
     # leNet = LeNet5(drop= True)
     # test_model(leNet, x_train, y_train, x_test, y_test, sets)
+    #
     # print('CustomNet')
     # sets = {'learning_rate':0.0005, 'l2': 0}
     # custom = CustomNet()
@@ -43,9 +50,8 @@ def go(train, test):
 
 
 
-    # leNet = LeNet5()
-    # #  epoch_eval_single(leNet, x_train, y_train, x_test, y_test)
-    # cross_val(leNet, x_train, y_train, x_test, y_test)
+    # epoch_eval_single(leNet, x_train, y_train, x_test, y_test)
+    # # cross_val(lenet, x_train, y_train, x_test, y_test)
     # test_model(leNet, x_train, y_train, x_test, y_test)
 
 
@@ -59,16 +65,9 @@ def go(train, test):
 
 
     #----------- Linear --------------#
-    # print('linear ensample')
-    #linear_co = linear_comb()
-    # # have to adjust this you dont wanna track performance over epochs, just set it to False
-    #model, train_acc, test_acc = train_cnn(linear_co, x_train, y_train, x_test, y_test, track_train_test_acc=False)
-    # acc = eval_cnn(model, x_test, y_test)
-    # print('accuracy on testing:', acc)
-    # comment when you dont want plots for epoch
-    # plotTrainTestPerformance(train_acc, test_acc, 'Epochs')
-    # print("Linear Nets, best LR and stuff")
-    # train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_train_test_acc=True)
+    print("Linear Nets, best Hyperparameters")
+    train_linear_models_plus_average(x_train, y_train, x_test, y_test, track_train_test_acc=True)
+
     # cross_val(linear_one(dropout=0.25), x_train, y_train, x_test, y_test)
     # cross_val(linear_two(dropout=0.25), x_train, y_train, x_test, y_test)
     # cross_val(linear_three(dropout=0.25), x_train, y_train, x_test, y_test)
